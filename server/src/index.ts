@@ -14,6 +14,7 @@ const DBUrl = process.env.MONGO_URL;
 ConnectToDb(DBUrl);
 
 app.use("/api/users", UserRoute);
+
 app.get("/", (req, res) => {
   res.send("ok");
 });
