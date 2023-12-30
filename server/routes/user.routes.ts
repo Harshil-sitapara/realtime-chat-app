@@ -1,4 +1,4 @@
-import express, { Express, Request, Response, Router } from "express";
+import { Router } from "express";
 import {
   findUser,
   getAllUsers,

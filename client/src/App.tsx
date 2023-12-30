@@ -5,19 +5,25 @@ import Login from "./pages/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
 import NavbarComponent from "./components/Navbar";
+import { useContext } from "react";
+import { AuthContext } from "./context/auth.context";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
+  const { user } = useContext(AuthContext);
+
   return (
     <>
       <NavbarComponent />
       <Container>
         <Routes>
-          <Route path="/" element={<Chat />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={user ? <Chat /> : <Login />} />
+          <Route path="/register" element={user ? <Chat /> : <Register />} />
+          <Route path="/login" element={user ? <Chat /> : <Login />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Container>
+      <ToastContainer />
     </>
   );
 }

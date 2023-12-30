@@ -1,10 +1,21 @@
-import { Stack } from "react-bootstrap";
+import { useContext } from "react";
+import { Badge, OverlayTrigger, Stack, Tooltip } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 
 function NavbarComponent() {
+  const renderTooltip = (props: any) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Logout
+    </Tooltip>
+  );
+
+  const { user, logoutUser } = useContext(AuthContext);
+  const notificationCount = 5; 
+
   return (
     <Navbar
       expand="lg"
@@ -23,17 +34,55 @@ function NavbarComponent() {
         </h2>
         <Nav>
           <Stack direction="horizontal" gap={3}>
-            <Link to="/login" className="text-light text-decoration-none">
-              Login
-            </Link>
-            <Link to="/register" className="text-light text-decoration-none">
-              Register
-            </Link>
+            {!user && (
+              <>
+                <Link to="/login" className="text-light text-decoration-none">
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="text-light text-decoration-none"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+            {user && (
+              <>
+                 <Link
+                  to="/login"
+                  className="text-light text-decoration-none d-flex align-items-center me-3 position-relative"
+                >
+                  <span className="material-symbols-outlined">chat</span>
+                  {/* <Badge bg="danger" className="ms-1 position-absolute top-0 start-50 end-0 translate-middle-x h-50 w-50 p-0 ">
+                  {notificationCount}
+                  </Badge> */}
+                </Link>
+                <OverlayTrigger
+                  placement="bottom"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip}
+                >
+                  <Link
+                    to="/login"
+                    className="text-light text-decoration-none d-flex align-items-center"
+                    onClick={() => {
+                      logoutUser();
+                    }}
+                  >
+                    <span className="material-symbols-outlined logoutBtn">
+                      logout
+                    </span>
+                  </Link>
+                </OverlayTrigger>
+              </>
+            )}
           </Stack>
         </Nav>
       </Container>
     </Navbar>
   );
 }
+
 
 export default NavbarComponent;

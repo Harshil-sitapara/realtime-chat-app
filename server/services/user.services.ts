@@ -20,8 +20,9 @@ const MatchPasswordAndGenerateToken = async (
   password: string
 ) => {
   const user = await User.findOne({ email });
+  console.log(`Matching password and generating token for ${user?._id}`)
 
-  if (!user) throw new Error("User not found!");
+  if (!user) throw new Error("Invalid Email or password!");
 
   const hashedPassword = user.password;
 

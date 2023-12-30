@@ -9,19 +9,18 @@ import {
 const registerUser = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.json({ error: "All fields required!" });
+    }
 
     const user = await User.findOne({ email });
 
     if (user) {
-      return res.status(400).json({ message: "User already exists!" });
-    }
-
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "All fields required!" });
+      return res.json({ error: "User already exists!" });
     }
 
     if (!validator.isEmail(email)) {
-      return res.status(400).json({ message: "invalid Email!" });
+      return res.json({ error: "invalid Email!" });
     }
 
     const createdUser = new User({
@@ -41,8 +40,7 @@ const registerUser = async (req: Request, res: Response) => {
 const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password)
-      return res.status(400).json({ message: "All fields require!" });
+    if (!email || !password) return res.json({ error: "All fields require!" });
     const { user, token } = await MatchPasswordAndGenerateToken(
       email,
       password
@@ -50,9 +48,9 @@ const loginUser = async (req: Request, res: Response) => {
 
     res.json({ _id: user._id, name: user.name, email: user.email, token });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: (error as Error).message || "Internal server error" });
+    return res.json({
+      error: (error as Error).message || "Internal server error",
+    });
   }
 };
 
