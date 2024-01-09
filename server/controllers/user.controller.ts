@@ -65,6 +65,17 @@ const findUser = async (req: Request, res: Response) => {
   }
 };
 
+const findUserByEmail = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    res.status(200).json({ user });
+  } catch (error) {
+    console.log("Error", error);
+    res.status(500).json({ error: error });
+  }
+};
+
 const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
@@ -74,4 +85,4 @@ const getAllUsers = async (req: Request, res: Response) => {
     res.status(500).json({ error: error });
   }
 };
-export { registerUser, loginUser, findUser, getAllUsers };
+export { registerUser, loginUser, findUser, getAllUsers, findUserByEmail };

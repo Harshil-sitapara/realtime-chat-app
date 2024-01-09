@@ -1,10 +1,13 @@
 import { useContext } from "react";
-import { Badge, OverlayTrigger, Stack, Tooltip } from "react-bootstrap";
+import { Badge, Button, OverlayTrigger, Stack, Tooltip } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { ConfigContext } from "../context/config.context";
 
 function NavbarComponent() {
   const renderTooltip = (props: any) => (
@@ -14,7 +17,8 @@ function NavbarComponent() {
   );
 
   const { user, logoutUser } = useContext(AuthContext);
-  const notificationCount = 5; 
+  const { isDarkMode, setIsDarkMode } = useContext(ConfigContext);
+  const notificationCount = 5;
 
   return (
     <Navbar
@@ -23,15 +27,17 @@ function NavbarComponent() {
       data-bs-theme="dark"
       style={{
         height: "3.75rem",
-        fontFamily: "font-family: 'Mukta', sans-serif;",
+        fontFamily: "Mukta",
       }}
     >
       <Container>
         <h2 className="pt-1">
           <Link to="/" className="link-light text-decoration-none">
+            <img src="" alt="" />
             QuikTalk
           </Link>
         </h2>
+        {user && <h3 style={{ color: "white" }}>Hi {user?.name}!</h3>}
         <Nav>
           <Stack direction="horizontal" gap={3}>
             {!user && (
@@ -49,15 +55,25 @@ function NavbarComponent() {
             )}
             {user && (
               <>
-                 <Link
+                <Link
                   to="/login"
-                  className="text-light text-decoration-none d-flex align-items-center me-3 position-relative"
+                  className="text-light text-decoration-none d-flex align-items-center me-1 position-relative"
                 >
                   <span className="material-symbols-outlined">chat</span>
                   {/* <Badge bg="danger" className="ms-1 position-absolute top-0 start-50 end-0 translate-middle-x h-50 w-50 p-0 ">
                   {notificationCount}
                   </Badge> */}
                 </Link>
+                {/* Implement Dark mode functionality */}
+                <div
+                  className="text-light text-decoration-none d-flex align-items-center me-1 position-relative changeModeBtn"
+                  onClick={() => {
+                    setIsDarkMode(!isDarkMode);
+                    localStorage.setItem("isLightMode", isDarkMode);
+                  }}
+                >
+                  {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+                </div>
                 <OverlayTrigger
                   placement="bottom"
                   delay={{ show: 250, hide: 400 }}
@@ -83,6 +99,5 @@ function NavbarComponent() {
     </Navbar>
   );
 }
-
 
 export default NavbarComponent;
