@@ -4,7 +4,7 @@ import { useFetchUserRecipient } from "../../hooks/useFetchRecipient";
 import { Stack } from "react-bootstrap";
 import Profile from "../../assets/profile.svg";
 import SearchPalette from "../SearchPalette";
-import { ChatContext } from "../../context/chat.context";
+import { ChatContext, onlineUsers } from "../../context/chat.context";
 import { ConfigContext } from "../../context/config.context";
 
 interface UserChatProps {
@@ -15,7 +15,8 @@ interface UserChatProps {
 
 const UserChat: React.FC<UserChatProps> = ({ chat, userInfo, index }) => {
   const { recipientUser } = useFetchUserRecipient(userInfo, chat);
- 
+  const { onlineUsers } = useContext(ChatContext);
+
   return (
     <Stack
       direction="horizontal"
@@ -28,7 +29,16 @@ const UserChat: React.FC<UserChatProps> = ({ chat, userInfo, index }) => {
       <div className="d-flex">
         <div className="me-2 avatar-container">
           <img src={Profile} alt="Avatar" height="35px" />
-          <div className="user-online"></div>
+          {/* "user-online" */}
+          <div
+            className={
+              onlineUsers?.some(
+                (user: onlineUsers) => user?.userId === recipientUser?._id
+              )
+                ? "user-online"
+                : ""
+            }
+          ></div>
         </div>
         <div className="text-content detail-container">
           <div className="name">{recipientUser?.name}</div>

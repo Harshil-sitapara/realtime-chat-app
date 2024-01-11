@@ -10,6 +10,7 @@ import React, {
 import { getRequest, BASE_API_URL, postRequest } from "../utils/services";
 import { AuthContext } from "./auth.context";
 import { userChatInterface } from "../pages/Chat";
+import { io } from "socket.io-client";
 
 interface ChatContextProps {
   children: ReactNode;
@@ -20,6 +21,10 @@ interface currentChat {
   members: [];
   createdAt: string;
   updatedAt: string;
+}
+export interface onlineUsers {
+  userId: string;
+  socketId: string;
 }
 
 export const ChatContext = createContext<any>(null);
@@ -33,12 +38,16 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
   const [isUserChatsLoading, setIsUserChatsLoading] = useState(false);
   const [potentialChats, setPotentialChats] = useState([]);
   const [currentChat, setCurrentChat] = useState<currentChat | null>(null);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<any>([]);
   const [messageError, setMessageError] = useState("");
   const [isMessagesLoading, setMessagesLoading] = useState(false);
-  const [allUsers, setAllUsers] = useState();
+  const [allUsers, setAllUsers] = useState([]);
   const { user } = useContext(AuthContext);
-  const [newMessage, setNewMessage] = useState();
+  const [newMessage, setNewMessage] = useState<any>();
+  const [socket, setSocket] = useState<any>(null);
+  const [onlineUsers, setOnlineUsers] = useState<onlineUsers[]>([]);
+
+  console.log("OnlineUsers", onlineUsers);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -68,28 +77,11 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
     };
     getUsers();
   }, [userChats]);
-
-  const getUserChats = async () => {
-    setIsUserChatsLoading(true);
-    setUserChatsError("");
-
-    if (currentUser && currentUser._id) {
-      const response: any = await getRequest(
-        `${BASE_API_URL}/chats/${currentUser._id}`
-      );
-      setTimeout(() => {
-        setIsUserChatsLoading(false);
-      }, 200);
-
-      if (response?.error) {
-        setTimeout(() => {
-          setIsUserChatsLoading(false);
-        }, 200);
-        return setUserChatsError(response.error);
-      }
-      setUsersChat(response?.data);
+  useEffect(() => {
+    if (currentUser) {
+      getUserChats();
     }
-  };
+  }, [currentUser]);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -114,6 +106,89 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
     getMessages();
   }, [currentChat]);
 
+  //NOTE - Initial socket
+  useEffect(() => {
+    const newSocket = io(`http://localhost:3000`); // socket server URL
+
+    setSocket(newSocket);
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [user]);
+
+  //NOTE - Add online users
+  useEffect(() => {
+    if (socket === null) return;
+    socket.emit("addNewUser", user?._id);
+
+    socket.on("getOnlineUsers", (res: onlineUsers[]) => {
+      setOnlineUsers(res);
+    });
+
+    return () => {
+      socket.off("getOnlineUsers");
+    };
+  }, [socket, user]);
+
+  //NOTE - Send message
+  useEffect(() => {
+    if (socket === null) {
+      console.log("Getting null in socket");
+      return;
+    }
+
+    const recipientId = currentChat?.members?.find(
+      (id: string) => id !== user?._id
+    );
+    socket.emit("sendMessage", { ...newMessage, recipientId });
+  }, [newMessage]);
+
+  //NOTE - Receive message
+  useEffect(() => {
+    if (socket === null) return;
+
+    socket.on("getMessage", (res: any) => {
+      console.log("Received Message:", res);
+      console.log("Current Chat:", currentChat);
+
+      if (currentChat?._id !== res?.data.chatId) {
+        console.log("Return");
+        return;
+      }
+      setMessages((prev: any) => {
+        const updatedMessages = [...prev, res.data];
+        console.log("Messages After Update:", updatedMessages);
+        return updatedMessages;
+      });
+      // console.log("Messages After Update:", messages);
+    });
+    return () => {
+      socket.off("getMessage");
+    };
+  }, [socket, currentChat, messages]);
+
+  const getUserChats = async () => {
+    setIsUserChatsLoading(true);
+    setUserChatsError("");
+
+    if (currentUser && currentUser._id) {
+      const response: any = await getRequest(
+        `${BASE_API_URL}/chats/${currentUser._id}`
+      );
+      setTimeout(() => {
+        setIsUserChatsLoading(false);
+      }, 200);
+
+      if (response?.error) {
+        setTimeout(() => {
+          setIsUserChatsLoading(false);
+        }, 200);
+        return setUserChatsError(response.error);
+      }
+      setUsersChat(response?.data);
+    }
+  };
+
   const updateCurrentChat = (chat: any) => {
     setCurrentChat(chat);
   };
@@ -131,21 +206,12 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
     setUsersChat((prev: userChatInterface[]) => [...prev, response.data]);
   };
 
-  useEffect(() => {
-    if (currentUser) {
-      getUserChats();
-    }
-  }, [currentUser]);
-
   const sendTextMessage = async (
     currentChat: currentChat,
     textMessage: string,
     sender: any,
-    setTextMessage:any
+    setTextMessage: any
   ) => {
-    console.log("________currentChat", currentChat);
-    console.log("__________textMessage", textMessage);
-    console.log("__________sender", sender);
     const response: any = await postRequest(`/message`, {
       chatId: currentChat?._id,
       text: textMessage,
@@ -155,10 +221,9 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
     if (response?.error) {
       return console.log("Error while sending message:", response?.error);
     }
-    console.log("response________",response)
     setNewMessage(response);
-    setMessages((prev: any[]) => [...prev, response.data]);
-    setTextMessage("")
+    setMessages((prev: any) => [...prev, response.data]);
+    setTextMessage("");
   };
 
   return (
@@ -175,7 +240,8 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
         isMessagesLoading,
         currentChat,
         sendTextMessage,
-        allUsers
+        allUsers,
+        onlineUsers,
       }}
     >
       {children}

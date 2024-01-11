@@ -42,6 +42,7 @@ export default function Chat() {
   //   const body = document.body;
   //   body.style.backgroundColor = isLightMode ? "#fff" : "#333";
   // }, []);
+
   const handleAddUser = async () => {
     const { value: email } = await Swal.fire({
       input: "email",

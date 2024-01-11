@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Mukta:wght@500&family=Mulish:wght@900&family=Roboto:wght@400;500&display=swap");
 
-
-
 .form-inner {
   /* background-image: linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% ); */
   background-color: #b5d4ea;
@@ -58,7 +56,19 @@
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  background: rgb(0, 219, 0);
+  background: #00bd9b;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  z-index: 2;
+}
+
+.user-offline {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: #737676;
   position: absolute;
   top: -3px;
   right: -3px;
@@ -229,16 +239,7 @@
   position: absolute;
   top: 15px;
 }
-.user-online {
-  width: 10px;
-  height: 10px;
-  background-color: #00bd9b;
-  border-radius: 50%;
-  position: absolute;
-  bottom: 2;
-  right: 2px;
-  /* top: -2px; */
-}
+
 .detail-container {
   padding-left: 30%;
 }
@@ -264,7 +265,7 @@
   height: 100%;
   width: 100%;
   padding: 1%;
-  overflow-y: auto;  /* Add this line to enable vertical scrolling */
+  overflow-y: auto; /* Add this line to enable vertical scrolling */
   max-height: 100%;
 }
 .left-msg-main {
@@ -516,6 +517,18 @@
   height: 12px;
 }
 
-.send_btn{
+.send_btn {
   all: unset;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 903px;
+  }
+}
+
+@media (max-width: 989px) {
+  .container {
+    max-width: 903px;
+  }
 }
