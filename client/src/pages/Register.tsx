@@ -21,7 +21,7 @@ const Register = () => {
     }
   }, [registerError]);
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{width:"100%"}}>
       <div className="row justify-content-center">
         <div className="col-md-6 form-inner">
           <form

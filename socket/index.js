@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
+import http from "http";
 
-const io = new Server(3000, {
+const io = new Server(3000,{
   cors: "http://localhost:5000", // node js back-end URL
   extraHeaders: {
     "Access-Control-Allow-Origin": "http://127.0.0.1:5173",
@@ -27,9 +28,13 @@ io.on("connection", (socket) => {
     const user = onlineUsers?.find(
       (user) => user.userId == message.recipientId
     );
-
     if (user) {
       io.to(user.socketId).emit("getMessage", message);
+      io.to(user.socketId).emit("getNotification", {
+        senderId: message?.data.senderId,
+        isRead: false,
+        date: new Date(),
+      });
     }
   });
 

@@ -9,7 +9,7 @@ import moment from "moment";
 import { BASE_API_URL, getRequest, postRequest } from "../utils/services";
 import { ConfigContext } from "../context/config.context";
 import SearchPalette from "../components/SearchPalette";
-import  toast, { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Separator() {
   const { user } = useContext(AuthContext);
@@ -20,10 +20,12 @@ export default function Separator() {
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
+    chatContainerRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
   }, [messages,currentChat]);
+  
 
   if (recipientUser?.length === 0) {
     return (
@@ -45,7 +47,11 @@ export default function Separator() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      sendTextMessage(currentChat, textMessage, user, setTextMessage);
+      if (textMessage.trim() !== "") {
+        sendTextMessage(currentChat, textMessage, user, setTextMessage);
+      } else {
+        toast.error("Message can't be empty!");
+      }
     }
   };
 
@@ -60,8 +66,8 @@ export default function Separator() {
             </div>
           </div>
         </div>
-        <div className="text-box-main" ref={chatContainerRef}>
-          <div className="container">
+        <div className="text-box-main">
+          <div className="container" ref={chatContainerRef}>
             {messages?.length == 0 && (
               <div
                 style={{
@@ -71,7 +77,8 @@ export default function Separator() {
                 }}
               >
                 <p>
-                  No conversation with <strong>{recipientUser?.name}</strong> at!
+                  No conversation with <strong>{recipientUser?.name}</strong>{" "}
+                  at!
                 </p>
               </div>
             )}
@@ -128,7 +135,7 @@ export default function Separator() {
                     setTextMessage
                   );
                 } else {
-                  toast.error("Message can't be empty!")
+                  toast.error("Message can't be empty!");
                 }
               }}
             >

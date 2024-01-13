@@ -8,6 +8,7 @@ import { AuthContext } from "../context/auth.context";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { ConfigContext } from "../context/config.context";
+import Notifications from "./Notifications";
 
 function NavbarComponent() {
   const renderTooltip = (props: any) => (
@@ -55,15 +56,7 @@ function NavbarComponent() {
             )}
             {user && (
               <>
-                <Link
-                  to="/login"
-                  className="text-light text-decoration-none d-flex align-items-center me-1 position-relative"
-                >
-                  <span className="material-symbols-outlined">chat</span>
-                  {/* <Badge bg="danger" className="ms-1 position-absolute top-0 start-50 end-0 translate-middle-x h-50 w-50 p-0 ">
-                  {notificationCount}
-                  </Badge> */}
-                </Link>
+                <Notifications/>
                 {/* Implement Dark mode functionality */}
                 <div
                   className="text-light text-decoration-none d-flex align-items-center me-1 position-relative changeModeBtn"

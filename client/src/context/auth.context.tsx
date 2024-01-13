@@ -48,43 +48,53 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({
   const registerUser = async (url: string, body: user) => {
     setIsRegisterLoading(true);
     setRegisterError("");
-    const response: any = await postRequest(url, body);
-    if (response?.error) {
+    try {
+      const response: any = await postRequest(url, body);
+      if (response?.error) {
+        setTimeout(() => {
+          setIsRegisterLoading(false);
+        }, 300);
+        return setRegisterError(response.error);
+      }
       setTimeout(() => {
         setIsRegisterLoading(false);
       }, 300);
-      return setRegisterError(response.error);
+      toast.success("Registration successful!", {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
+      localStorage.setItem("User", JSON.stringify(response.data));
+      setUser(response.data);
+      return response;
+    } catch (error) {
+      console.log("Error while register", error);
+      setRegisterError(error as string);
     }
-    setTimeout(() => {
-      setIsRegisterLoading(false);
-    }, 300);
-    toast.success("Registration successful!", {
-      position: toast.POSITION.BOTTOM_LEFT,
-    });
-    localStorage.setItem("User", JSON.stringify(response.data));
-    setUser(response.data);
-    return response;
   };
 
   const loginUser = async (url: string, body: user) => {
     setIsLoginLoading(true);
     setLoginError("");
-    const response: any = await postRequest(url, body);
-    if (response?.error) {
+    try {
+      const response: any = await postRequest(url, body);
+      if (response?.error) {
+        setTimeout(() => {
+          setIsLoginLoading(false);
+        }, 300);
+        return setLoginError(response.error);
+      }
       setTimeout(() => {
         setIsLoginLoading(false);
       }, 300);
-      return setLoginError(response.error);
+      toast.success("Login successful!", {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
+      localStorage.setItem("User", JSON.stringify(response.data));
+      setUser(response.data);
+      return response;
+    } catch (error) {
+      console.log("Error while register", error);
+      setLoginError(error as string);
     }
-    setTimeout(() => {
-      setIsLoginLoading(false);
-    }, 300);
-    toast.success("Login successful!", {
-      position: toast.POSITION.BOTTOM_LEFT,
-    });
-    localStorage.setItem("User", JSON.stringify(response.data));
-    setUser(response.data);
-    return response;
   };
 
   const logoutUser = () => {

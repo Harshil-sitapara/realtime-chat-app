@@ -7,8 +7,15 @@ import MessageRoute from "../routes/message.routes";
 import cors from "cors";
 
 const app: Express = express();
-app.use(express.json());
+// const corsoptions = {
+//   origin: "http://http://127.0.0.1/:5173",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   allowedHeaders: "authorization,content-type",
+//   credentials: true,
+//   preflightContinue: false,
+// };
 app.use(cors());
+app.use(express.json());
 dotenv.config();
 
 const port = process.env.PORT || 5000;

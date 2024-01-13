@@ -9,7 +9,9 @@ import Separator from "./ChatBox";
 import { ConfigContext } from "../context/config.context";
 import AddIcon from "@mui/icons-material/Add";
 import Swal from "sweetalert2";
-import { postRequest } from "../utils/services";
+import { postRequest, user } from "../utils/services";
+import { useFetchUserRecipient } from "../hooks/useFetchRecipient";
+import FilteredChat from "./FilteredChat";
 
 export interface userChatInterface {
   _id: String;
@@ -27,6 +29,7 @@ export default function Chat() {
     updateCurrentChat,
     messages,
     createChat,
+    allUsers,
   } = useContext(ChatContext);
   const {
     isDarkMode,
@@ -36,12 +39,24 @@ export default function Chat() {
     isSearchPaletteVisible,
   } = useContext(ConfigContext);
   const { user } = useContext(AuthContext);
+  const [filteredChat, setFilteredChat] = useState();
 
   // useEffect(() => {
   //   const isLightMode = localStorage.getItem("isLightMode");
   //   const body = document.body;
   //   body.style.backgroundColor = isLightMode ? "#fff" : "#333";
   // }, []);
+  // const getFilterChat = (userChats: userChatInterface[]) => {
+  //   console.log("userChats", userChats)
+  //   return userChats?.map((chat: any) => {
+  //     const { recipientUser } = useFetchUserRecipient(user, chat);
+  //     return recipientUser;
+  //   });
+  // };
+  // console.log("getFilterChat", getFilterChat(userChats))
+
+
+
 
   const handleAddUser = async () => {
     const { value: email } = await Swal.fire({
@@ -77,6 +92,8 @@ export default function Chat() {
     }
     console.log("Response with email", response?.data.user);
   };
+
+
 
   return (
     <>
@@ -123,7 +140,7 @@ export default function Chat() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onFocus={() => setSearchPaletteVisible(true)}
                   onBlur={() => setSearchPaletteVisible(false)}
-                  disabled
+                  // disabled
                 />
                 <button
                   type="button"
@@ -151,6 +168,8 @@ export default function Chat() {
                   <PotentialChats />
                 </>
               )} */}
+
+              
             </Stack>
             <Separator />
           </Stack>

@@ -12,11 +12,11 @@ import { AuthContext } from "./auth.context";
 import { userChatInterface } from "../pages/Chat";
 import { io } from "socket.io-client";
 
-interface ChatContextProps {
+export interface ChatContextProps {
   children: ReactNode;
   currentUser: any;
 }
-interface currentChat {
+export interface currentChat {
   _id: string;
   members: [];
   createdAt: string;
@@ -25,6 +25,26 @@ interface currentChat {
 export interface onlineUsers {
   userId: string;
   socketId: string;
+}
+export interface notification {
+  senderId: string;
+  isRead: boolean;
+  date: Date;
+}
+export interface currentUser {
+  _id: string;
+  name: string;
+  email: string;
+  token: string;
+}
+
+export interface message {
+  chatId: string;
+  senderId: string;
+  text: string;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const ChatContext = createContext<any>(null);
@@ -46,8 +66,11 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
   const [newMessage, setNewMessage] = useState<any>();
   const [socket, setSocket] = useState<any>(null);
   const [onlineUsers, setOnlineUsers] = useState<onlineUsers[]>([]);
+  const [notifications, setNotifications] = useState<notification[]>([]);
 
-  console.log("OnlineUsers", onlineUsers);
+  // console.log("notification", notifications);
+  // console.log("notification", typeof []);
+  // console.log("onlineUsers", typeof onlineUsers);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -85,15 +108,15 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
 
   useEffect(() => {
     const getMessages = async () => {
-      setMessagesLoading(true);
+      // setMessagesLoading(true);
       setMessageError("");
 
       const response: any = await getRequest(
         `${BASE_API_URL}/message/${currentChat?._id}`
       );
-      setTimeout(() => {
-        setMessagesLoading(false);
-      }, 500);
+      // setTimeout(() => {
+      //   setMessagesLoading(false);
+      // }, 200);
 
       if (response?.error) {
         setTimeout(() => {
@@ -132,10 +155,7 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
 
   //NOTE - Send message
   useEffect(() => {
-    if (socket === null) {
-      console.log("Getting null in socket");
-      return;
-    }
+    if (socket === null) return;
 
     const recipientId = currentChat?.members?.find(
       (id: string) => id !== user?._id
@@ -143,27 +163,29 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
     socket.emit("sendMessage", { ...newMessage, recipientId });
   }, [newMessage]);
 
-  //NOTE - Receive message
+  //NOTE - Receive message and notification
   useEffect(() => {
     if (socket === null) return;
 
     socket.on("getMessage", (res: any) => {
-      console.log("Received Message:", res);
-      console.log("Current Chat:", currentChat);
+      if (currentChat?._id !== res?.data.chatId) return;
+      setMessages((prev: any) => [...prev, res.data]);
+    });
 
-      if (currentChat?._id !== res?.data.chatId) {
-        console.log("Return");
-        return;
+    socket.on("getNotification", (res: notification) => {
+      console.log("Res", res);
+      const isChatOpen = currentChat?.members.some(
+        (id) => id === res?.senderId
+      );
+      if (isChatOpen) {
+        setNotifications((prev) => [{ ...res, isRead: true }, ...prev]);
+      } else {
+        setNotifications((prev) => [...prev, res]);
       }
-      setMessages((prev: any) => {
-        const updatedMessages = [...prev, res.data];
-        console.log("Messages After Update:", updatedMessages);
-        return updatedMessages;
-      });
-      // console.log("Messages After Update:", messages);
     });
     return () => {
       socket.off("getMessage");
+      socket.off("getNotification");
     };
   }, [socket, currentChat, messages]);
 
@@ -226,6 +248,68 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
     setTextMessage("");
   };
 
+  const markAllNotificationAsRead = useCallback(
+    (notifications: notification[]) => {
+      const mNotifications = notifications.map((n: notification) => {
+        return { ...n, isRead: true };
+      });
+      setNotifications(mNotifications);
+    },
+    []
+  );
+
+  const markNotificationAsRead = useCallback(
+    (
+      n: notification,
+      user: currentUser,
+      userChats: userChatInterface[],
+      notifications: notification[]
+    ) => {
+      // Find chat to open
+      const desireChat = userChats.find((chat) => {
+        const bothChatMember = [user._id, n.senderId];
+        const isDesiredChat = chat?.members.every((member) => {
+          return bothChatMember.includes(member);
+        });
+
+        return isDesiredChat;
+      });
+
+      // mark notification as read
+      const mNotifications: notification[] = notifications.map(
+        (el: notification) => {
+          if (n.senderId == el.senderId) {
+            return { ...n, isRead: true };
+          } else {
+            return el;
+          }
+        }
+      );
+
+      updateCurrentChat(desireChat);
+      setNotifications(mNotifications);
+    },
+    []
+  );
+
+  const markSpecificUserNotificationsAsRead = useCallback(
+    (specificUserNotifications: any, notifications: any) => {
+      const notification = notifications.map((n: any) => {
+        let notifications;
+        specificUserNotifications.forEach((specN: any) => {
+          if (specN.senderId === n.senderId) {
+            notifications = { ...specN, isRead: true };
+          } else {
+            notifications = n;
+          }
+        });
+        return notifications;
+      });
+
+      setNotifications(notification);
+    },
+    []
+  );
   return (
     <ChatContext.Provider
       value={{
@@ -242,6 +326,11 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
         sendTextMessage,
         allUsers,
         onlineUsers,
+        notifications,
+        markAllNotificationAsRead,
+        markNotificationAsRead,
+        markSpecificUserNotificationsAsRead,
+        newMessage,
       }}
     >
       {children}
