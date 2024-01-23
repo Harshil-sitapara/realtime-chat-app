@@ -5,6 +5,7 @@ import UserRoute from "../routes/user.routes";
 import ChatRoute from "../routes/chat.routes";
 import MessageRoute from "../routes/message.routes";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 const app: Express = express();
 // const corsoptions = {
@@ -16,6 +17,8 @@ const app: Express = express();
 // };
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 dotenv.config();
 
 const port = process.env.PORT || 5000;

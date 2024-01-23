@@ -1,6 +1,6 @@
-import { useContext, useEffect } from "react";
+import { ChangeEvent, useContext, useEffect } from "react";
 import { AuthContext } from "../context/auth.context";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
   const {
@@ -11,17 +11,32 @@ const Register = () => {
     registerError,
   } = useContext(AuthContext);
   const showToastMessage = (msg: string) => {
-    toast.error(msg, {
-      position: toast.POSITION.BOTTOM_LEFT,
-    });
+    toast.error(msg)
   };
   useEffect(() => {
     if (registerError) {
       showToastMessage(registerError);
     }
   }, [registerError]);
+
+  const handleImageUpload = (e: any) => {
+    const file = e.target.files[0];
+    TransformFile(file);
+  };
+  const TransformFile = (file: any) => {
+    const reader = new FileReader();
+
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        const base64File = reader.result;
+        console.log("Reader",reader)
+        updateRegisterInfo({ ...registerInfo, profilePhoto:base64File });
+      };
+    }
+  };
   return (
-    <div className="container mt-5" style={{width:"100%"}}>
+    <div className="container mt-5" style={{ width: "100%" }}>
       <div className="row justify-content-center">
         <div className="col-md-6 form-inner">
           <form
@@ -77,7 +92,16 @@ const Register = () => {
                 }}
               />
             </div>
-
+            <div className="form-group my-2 mt-2">
+              <label htmlFor="exampleInputPassword1">Profile picture</label>
+              <input
+                type="file"
+                accept="image/"
+                className="form-control"
+                onChange={handleImageUpload}
+                required
+              />
+            </div>
             {isRegisterLoading ? (
               <button className="btn btn-dark btn-block mt-3" disabled>
                 <i className="fa fa-spinner fa-spin"></i> Loading

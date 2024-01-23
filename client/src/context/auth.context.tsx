@@ -6,7 +6,8 @@ import React, {
   useState,
 } from "react";
 import { BASE_API_URL, postRequest, user } from "../utils/services";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 interface AuthContextProps {
   children: ReactNode;
@@ -24,6 +25,7 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({
     name: "",
     email: "",
     password: "",
+    profilePhoto: "",
   });
   // Login
   const [loginError, setLoginError] = useState("");
@@ -59,15 +61,16 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({
       setTimeout(() => {
         setIsRegisterLoading(false);
       }, 300);
-      toast.success("Registration successful!", {
-        position: toast.POSITION.BOTTOM_LEFT,
-      });
+      if (response) {
+        toast.success("Registration successful!")
+      }
       localStorage.setItem("User", JSON.stringify(response.data));
       setUser(response.data);
       return response;
     } catch (error) {
       console.log("Error while register", error);
       setRegisterError(error as string);
+      toast.error("Something went wrong!")
     }
   };
 
@@ -85,15 +88,16 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({
       setTimeout(() => {
         setIsLoginLoading(false);
       }, 300);
-      toast.success("Login successful!", {
-        position: toast.POSITION.BOTTOM_LEFT,
-      });
+      if (response) {
+        toast.success("Login successful!")
+      }
       localStorage.setItem("User", JSON.stringify(response.data));
       setUser(response.data);
       return response;
     } catch (error) {
       console.log("Error while register", error);
       setLoginError(error as string);
+      toast.error("Something went wrong!")
     }
   };
 

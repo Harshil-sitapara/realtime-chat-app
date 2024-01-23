@@ -28,5 +28,15 @@ const getMessages = async (req: Request, res: Response) => {
   }
 };
 
+const clearMessages = async (req: Request, res: Response) => {
+  const { chatId } = req.params;
+  try {
+    await Message.deleteMany({chatId})
+    return res.json({message:"Cleared chat!"})
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).json({ error });
+  }
+};
 
-export { createMessage, getMessages };
+export { createMessage, getMessages,clearMessages };

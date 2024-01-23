@@ -9,6 +9,10 @@ import { useFetchLatestMessage } from "../../hooks/useFetchLatestMessage";
 import moment from "moment";
 import { ConfigContext } from "../../context/config.context";
 
+import { styled } from "@mui/material/styles";
+import Badge from "@mui/material/Badge";
+import Avatar from "@mui/material/Avatar";
+
 interface UserChatProps {
   chat: userChatInterface;
   userInfo: any;
@@ -23,24 +27,24 @@ const UserChat: React.FC<UserChatProps> = ({ chat, userInfo, index }) => {
     markSpecificUserNotificationsAsRead,
     currentChat,
   } = useContext(ChatContext);
-  const [filteredChat,setFilteredChat] = useState<any>(null)
+  const { isDarkMode } = useContext(ConfigContext);
+  const [filteredChat, setFilteredChat] = useState<any>(null);
 
   const { searchTerm } = useContext(ConfigContext);
   // console.log("recipientUser", recipientUser);
-  console.log("searchTerm",searchTerm)
   // if (recipientUser?.name && searchTerm && recipientUser.name.includes(searchTerm)) {
   //   setFilteredChat((prev: any) => [...prev, recipientUser]);
   // }
-  console.log("recipientUser", recipientUser);
 
-  const filterUser = (searchTerm : any) => {
-    const filter =  recipientUser?.name?.startsWith(searchTerm) ? recipientUser.name : null ;
-    setFilteredChat(filter)
-  }
- console.log(filterUser(searchTerm));
-  // const filteredChats = recipientUser?.name === searchTerm;
-  // console.log("filteredChats",filteredChats)
-  console.log("filteredChat", filteredChat)
+  //   const filterUser = (searchTerm : any) => {
+  //     const filter =  recipientUser?.name?.startsWith(searchTerm) ? recipientUser.name : null ;
+  //     setFilteredChat(filter)
+  //   }
+  //  console.log(filterUser(searchTerm));
+  //   // const filteredChats = recipientUser?.name === searchTerm;
+  //   // console.log("filteredChats",filteredChats)
+  //   console.log("filteredChat", filteredChat)
+
   const unReadNotification = unReadNotifications(notifications);
   const particularUserUnreadNotifications = unReadNotification.filter(
     (n) => n.senderId === recipientUser?._id
@@ -53,6 +57,40 @@ const UserChat: React.FC<UserChatProps> = ({ chat, userInfo, index }) => {
       : message;
   };
 
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      backgroundColor: "#44b700",
+      color: "#44b700",
+      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+      "&::after": {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        borderRadius: "50%",
+        animation: "ripple 1.2s infinite ease-in-out",
+        border: "1px solid currentColor",
+        content: '""',
+      },
+    },
+    "@keyframes ripple": {
+      "0%": {
+        transform: "scale(.8)",
+        opacity: 1,
+      },
+      "100%": {
+        transform: "scale(2.4)",
+        opacity: 0,
+      },
+    },
+  }));
+  const SmallAvatar = styled(Avatar)(({ theme }) => ({
+    width: 22,
+    height: 22,
+    border: `2px solid ${theme.palette.background.paper}`,
+  }));
+
   return (
     <Stack
       direction="horizontal"
@@ -60,7 +98,7 @@ const UserChat: React.FC<UserChatProps> = ({ chat, userInfo, index }) => {
         index === 0 ? "first-chat" : ""
       }`}
       role="button"
-      data-aos="fade-up"
+      // data-aos="fade-up"
       onClick={() => {
         if (particularUserUnreadNotifications?.length !== 0) {
           markSpecificUserNotificationsAsRead(
@@ -70,20 +108,34 @@ const UserChat: React.FC<UserChatProps> = ({ chat, userInfo, index }) => {
         }
       }}
     >
-      
       <div className="d-flex">
         <div className="me-2 avatar-container">
-          <img src={Profile} alt="Avatar" height="35px" />
-          {/* "user-online" */}
-          <div
-            className={
-              onlineUsers?.some(
-                (user: onlineUsers) => user?.userId === recipientUser?._id
-              )
-                ? "user-online"
-                : ""
+          <img
+            src={
+              recipientUser?.profilePhoto?.url
+                ? recipientUser?.profilePhoto?.url
+                : Profile
             }
-          ></div>
+            alt="Avatar"
+            height="40px"
+            width="40px"
+            style={{
+              border: "1px solid grey",
+              borderRadius: "50%",
+              // padding: 2,
+              backgroundColor: "white",
+            }}
+          />
+          {/* "user-online" */}
+            <div
+              className={
+                onlineUsers?.some(
+                  (user: onlineUsers) => user?.userId === recipientUser?._id
+                )
+                  ? "user-online"
+                  : ""
+              }
+            ></div>
         </div>
         <div className="text-content detail-container">
           <div className="name">{recipientUser?.name}</div>

@@ -1,14 +1,12 @@
 import { useContext, useEffect } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { AuthContext } from "../context/auth.context";
 
 export default function Login() {
   const { loginInfo, setLoginInfo, loginUser, loginError } =
     useContext(AuthContext);
   const showToastMessage = (msg: string) => {
-    toast.error(msg, {
-      position: toast.POSITION.BOTTOM_LEFT,
-    });
+    toast.error(msg);
   };
   useEffect(() => {
     if (loginError ) {

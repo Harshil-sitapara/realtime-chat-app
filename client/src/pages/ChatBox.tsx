@@ -10,13 +10,18 @@ import { BASE_API_URL, getRequest, postRequest } from "../utils/services";
 import { ConfigContext } from "../context/config.context";
 import SearchPalette from "../components/SearchPalette";
 import toast, { Toaster } from "react-hot-toast";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import OptionsIconButton from "@mui/material/IconButton";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 export default function Separator() {
   const { user } = useContext(AuthContext);
   const { messages, currentChat, isMessagesLoading, sendTextMessage } =
     useContext(ChatContext);
+  const { isDarkMode } = useContext(ConfigContext);
   const { recipientUser } = useFetchUserRecipient(user, currentChat);
   const [textMessage, setTextMessage] = useState("");
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,8 +29,7 @@ export default function Separator() {
       behavior: "smooth",
       block: "end",
     });
-  }, [messages,currentChat]);
-  
+  }, [messages, currentChat]);
 
   if (recipientUser?.length === 0) {
     return (
@@ -55,29 +59,104 @@ export default function Separator() {
     }
   };
 
+  const options = ["Clear Chat"];
+  const open = Boolean(anchorEl);
+
+  const ITEM_HEIGHT = 48;
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
-      <Stack className="chatbox">
+      <Stack
+        className="chatbox"
+        style={{
+          border: isDarkMode ? "1px dashed white" : "",
+        }}
+      >
         <div className="text-box-header">
           <div className="chatbox-profile">
             <div className="me-2 chatbox-avatar-container">
-              <img src={Profile} alt="Avatar" height="35px" />
+              <img
+                src={recipientUser?.profilePhoto?.url ? recipientUser?.profilePhoto?.url : Profile}
+                alt="Avatar"
+                height="35px"
+                width="35px"
+                style={{
+                  borderRadius: "50%",
+                  border: "1px solid grey",
+                  padding:1,
+                  backgroundColor:"white"
+                }}
+              />
               <div className="chatbox-name">{recipientUser?.name}</div>
             </div>
           </div>
+          {/* <div className="chat-options">
+            <OptionsIconButton
+              aria-label="more"
+              id="long-button"
+              aria-controls={"long-menu"}
+              aria-expanded={"true"}
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </OptionsIconButton>
+            <Menu
+              id="long-menu"
+              MenuListProps={{
+                "aria-labelledby": "long-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              PaperProps={{
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5,
+                  width: "20ch",
+                  right: 0,
+                  left: "auto",
+                },
+              }}
+            >
+              {options?.map((option) => (
+                <MenuItem
+                  key={option}
+                  selected={option === "Pyxis"}
+                  onClick={handleClose}
+                >
+                  {option}
+                </MenuItem>
+              ))}
+            </Menu>
+          </div> */}
         </div>
         <div className="text-box-main">
           <div className="container" ref={chatContainerRef}>
             {messages?.length == 0 && (
               <div
                 style={{
-                  marginTop: "35%",
+                  marginTop: "15dvw",
                   textAlign: "center",
                   color: "#00000070",
                 }}
               >
-                <p>
-                  No conversation with <strong>{recipientUser?.name}</strong>{" "}
+                <p style={{ color: isDarkMode ? "white" : "" }}>
+                  No conversation with <strong>{recipientUser?.name} </strong>
                   at!
                 </p>
               </div>

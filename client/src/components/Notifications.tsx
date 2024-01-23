@@ -1,9 +1,10 @@
-import { Badge } from "@mui/material";
+import { Badge, Tooltip } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { ChatContext, notification } from "../context/chat.context";
 import { AuthContext } from "../context/auth.context";
 import unReadNotifications from "../utils/unReadNotifications";
 import moment from "moment";
+import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 
 export default function Notifications() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -28,26 +29,21 @@ export default function Notifications() {
 
   return (
     <>
-      <a
-        className="text-light text-decoration-none d-flex align-items-center me-1 position-relative"
-        onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-        style={{ cursor: "pointer" }}
-      >
-        {unReadNotification?.length !== 0 ? (
-          <Badge badgeContent={unReadNotification?.length} color="primary">
-            <span className="material-symbols-outlined">chat</span>
-          </Badge>
-        ) : (
-          <span className="material-symbols-outlined">chat</span>
-        )}
-
-        {/* <Badge
-          bg="danger"
-          className="ms-1 position-absolute top-0 start-50 end-0 translate-middle-x p-0 notification_badge"
+      <Tooltip title={!isNotificationOpen && "Notifications"} arrow>
+        <a
+          className="text-light text-decoration-none d-flex align-items-center me-1 position-relative"
+          onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+          style={{ cursor: "pointer" }}
         >
-          {2}
-        </Badge> */}
-      </a>
+          {unReadNotification?.length !== 0 ? (
+            <Badge badgeContent={unReadNotification?.length} color="primary">
+              <ChatOutlinedIcon/>
+            </Badge>
+          ) : (
+            <ChatOutlinedIcon/>
+          )}
+        </a>
+      </Tooltip>
       {isNotificationOpen && (
         <div className="notifications-box" data-aos="zoom-in">
           <div className="notifications-header">
@@ -55,6 +51,10 @@ export default function Notifications() {
             <div
               className="mark-as-read"
               onClick={() => markAllNotificationAsRead(notifications)}
+              style={{
+                color: notifications.length === 0 ? "grey" : "",
+                cursor: notifications.length === 0 ? "not-allowed" : "pointer",
+              }}
             >
               Mark all as read
             </div>

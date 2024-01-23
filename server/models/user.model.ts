@@ -7,6 +7,7 @@ const userSchema = new Schema(
     email: { type: String, require: true, unique: true },
     password: { type: String, require: true },
     salt: { type: String },
+    profilePhoto: { type: Object, require: true },
   },
   { timestamps: true }
 );

@@ -49,8 +49,54 @@
 .user-card .date {
   font-size: 14px;
   color: rgb(180, 180, 180);
+  background: transparent;
 }
 
+.ai-card {
+  /* color: white; */
+  position: relative;
+  border-top: 1px solid rgb(100, 100, 100);
+  width: 380px;
+}
+.ai-card.first-chat {
+  border-top: 1px solid rgb(100, 100, 100);
+}
+
+.ai-card .text-content {
+  width: 170px;
+}
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.ai-card .name {
+  font-weight: 700;
+  background: linear-gradient(to right, #cccccc, #333);
+  background-size: 200% 100%;
+  animation: gradientAnimation 2s ease-in-out infinite alternate;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* .ai-card .name {
+  font-weight: 700;
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} */
+
+.ai-card .text,
+.ai-card .date {
+  font-size: 14px;
+  color: rgb(180, 180, 180);
+  background: transparent;
+}
 .user-online {
   display: inline-block;
   height: 12px;
@@ -84,12 +130,14 @@
 }
 
 .messages-box {
-  height: 85vh;
+  max-height: 85vh;
+  min-height: 85vh;
   /* border-right: 1px solid black; */
   border: 1px dashed black;
   padding: 12px;
   border-radius: 8px;
   position: relative;
+  overflow-y: auto;
 }
 
 /* Chat Header */
@@ -167,6 +215,7 @@
   color: white;
   z-index: 5;
   border-radius: 3px;
+  overflow-y: auto;
 }
 
 .notifications-header {
@@ -176,11 +225,12 @@
   justify-content: space-between;
 }
 
+
 .notifications-box h3 {
   font-weight: 700;
   font-size: 20px;
 }
-.notifications-box hr{
+.notifications-box hr {
   margin: 0;
 }
 
@@ -240,14 +290,14 @@
   padding-bottom: 1px;
 }
 
-.notification_badge{
+.notification_badge {
   height: 58%;
   width: 63%;
   margin-left: 20px;
 }
 .avatar-container {
   position: absolute;
-  top: 15px;
+  top: 14px;
 }
 
 .detail-container {
@@ -270,6 +320,13 @@
 .text-box-header {
   height: 10%;
   border-bottom: 1px solid black;
+  position: relative;
+}
+
+.chat-options {
+  position: absolute;
+  right: 2%;
+  top: 7%;
 }
 
 .text-box-main {
@@ -301,7 +358,8 @@
   display: flex;
   justify-content: flex-end;
 }
-.right-msg, .left-msg {
+.right-msg,
+.left-msg {
   /* ... your existing styles ... */
   word-wrap: break-word;
 }
@@ -324,7 +382,6 @@
 .left-msg p {
   padding: 6px;
   max-width: 88%;
-
 }
 .right-msg p {
   padding-right: 7px;
@@ -440,27 +497,6 @@
 }
 .changeModeBtn {
   cursor: pointer;
-  opacity: 0.5;
-  pointer-events: none;
-}
-.changeModeBtn:hover {
-  cursor: pointer;
-  position: relative;
-}
-
-.changeModeBtn:hover::after {
-  content: "Change mode (Dark/Light)";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 0.5em;
-  border-radius: 4px;
-  white-space: nowrap;
-  opacity: 0.9;
-  font-size: 12px;
 }
 
 /* Search palette style */
@@ -529,6 +565,9 @@
 }
 .input-search-container {
   display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .custom-swal-input {
@@ -539,9 +578,42 @@
   all: unset;
 }
 
+/* Add user with email style */
+.add-user-modal {
+  width: 39%;
+  border: "2px solid #000";
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 6px;
+  padding: 2% 2%;
+}
+.add-user-modal-title {
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .chatbox .container {
     width: 903px;
+  }
+}
+
+@media (max-width: 775px) {
+  .chatbox,
+  .noChatSelected {
+    /* display: none; */
+  }
+  .messages-box {
+    width: 100%;
+    border: none;
+  }
+  .user-card {
+    width: 100%;
   }
 }
 
@@ -549,4 +621,34 @@
   .chatbox .container {
     max-width: 903px;
   }
+}
+
+@media (max-width: 1202px) and (min-width: 1102px) {
+  .messages-box {
+    width: 39%;
+  }
+  .user-card {
+    width: 100%;
+  }
+}
+/*  */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /* background: #f1f1f1;  */
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #959191;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

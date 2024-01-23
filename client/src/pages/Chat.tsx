@@ -12,6 +12,8 @@ import Swal from "sweetalert2";
 import { postRequest, user } from "../utils/services";
 import { useFetchUserRecipient } from "../hooks/useFetchRecipient";
 import FilteredChat from "./FilteredChat";
+import AiChat from "./AiChat";
+import { AddUserModal } from "../components/Modals/AddUserModal";
 
 export interface userChatInterface {
   _id: String;
@@ -40,6 +42,24 @@ export default function Chat() {
   } = useContext(ConfigContext);
   const { user } = useContext(AuthContext);
   const [filteredChat, setFilteredChat] = useState();
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+
+  useEffect(() => {
+    const rootElement = document?.getElementById("root");
+    if (rootElement) {
+      document.body.style.backgroundColor = isDarkMode ? "#2b2b2b" : "";
+      rootElement.style.backgroundColor = isDarkMode ? "#2b2b2b" : "";
+    }
+  }, [isDarkMode]);
+
+  const handleOpenAddUserModal = () => {
+    setIsAddUserModalOpen(true);
+  };
+
+  // Function to close the AddUserModal
+  const handleCloseAddUserModal = () => {
+    setIsAddUserModalOpen(false);
+  };
 
   // useEffect(() => {
   //   const isLightMode = localStorage.getItem("isLightMode");
@@ -55,49 +75,25 @@ export default function Chat() {
   // };
   // console.log("getFilterChat", getFilterChat(userChats))
 
+  // const filters = userChats?.map((chat: any) =>
+  //   useFetchUserRecipient(user, chat)
+  // );
 
-
-
-  const handleAddUser = async () => {
-    const { value: email } = await Swal.fire({
-      input: "email",
-      inputLabel: "Enter email address",
-      inputPlaceholder: "Enter email address",
-      customClass: {
-        input: "custom-swal-input",
-      },
-      confirmButtonText: "Add",
-    });
-    if (email) {
-      handleAddUserWithEmail(email);
-    }
-  };
-
-  const handleAddUserWithEmail = async (email: any) => {
-    const response: any = await postRequest("/users/findByEmail", { email });
-    if (response?.error) {
-      console.log("Error while finding user with email!", response?.error);
-    }
-    if (!response?.data.user) {
-      await Swal.fire({
-        title: "User Not Found",
-        text: "The user with the provided email address was not found.",
-        icon: "warning",
-        confirmButtonText: "OK",
-      });
-      return;
-    }
-    if (response?.data.user) {
-      await createChat(user?._id, response?.data.user._id);
-    }
-    console.log("Response with email", response?.data.user);
-  };
-
-
+  // console.log("filters", filters);
+  // const filteredChats = userChats?.filter((chat: any) =>
+  //   chat.recipientUser?.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
+  // console.log("FilterChats", filteredChats);
 
   return (
     <>
-      <Container className="mt-3">
+      <Container
+        className="mt-3"
+        style={{
+          backgroundColor: isDarkMode ? "#2b2b2b" : "",
+          color: isDarkMode ? "white" : "",
+        }}
+      >
         {isUserChatsLoading && (
           <Stack direction="vertical" gap={3} className="align-items-start">
             {userChats?.map((chat: userChatInterface, index: string) => (
@@ -128,11 +124,20 @@ export default function Chat() {
             direction="horizontal"
             gap={4}
             className="align-items-start"
-            style={{ position: "relative" }}
+            style={{ position: "relative", scrollBehavior: "auto" }}
           >
-            <Stack className="messages-box flex-grow-0 pe-3" gap={2}>
-              <h4 style={{ fontFamily: "Roboto" }}>Chats</h4>
-              <div className="input-search-container">
+            <Stack
+              className="messages-box flex-grow-0 pe-3"
+              gap={2}
+              style={{
+                border: isDarkMode ? "1px dashed white" : "",
+              }}
+            >
+              <h4>Chats</h4>
+              <div
+                className="input-search-container"
+                style={{ backgroundColor: isDarkMode ? "#2b2b2b" : "#f5f5f5" }}
+              >
                 <input
                   type="text"
                   className="form-control"
@@ -144,9 +149,10 @@ export default function Chat() {
                 />
                 <button
                   type="button"
-                  className="btn btn-dark"
+                  className={isDarkMode ? "btn btn-light" : "btn btn-dark"}
                   style={{ marginLeft: "10px" }}
-                  onClick={() => handleAddUser()}
+                  // onClick={() => handleAddUser()}
+                  onClick={() => handleOpenAddUserModal()}
                 >
                   <AddIcon />
                 </button>
@@ -154,6 +160,10 @@ export default function Chat() {
               {userChats?.length === 0 && (
                 <div className="no-chat-main">No chats found!</div>
               )}
+              {/* Ai Chat */}
+              {/* <div onClick={() => updateCurrentChat(userChats[3])}>
+              <AiChat />
+              </div> */}
               {userChats?.length > 0 && (
                 <>
                   {userChats.map((chat: userChatInterface, index: any) => (
@@ -168,12 +178,14 @@ export default function Chat() {
                   <PotentialChats />
                 </>
               )} */}
-
-              
             </Stack>
             <Separator />
           </Stack>
         )}
+        <AddUserModal
+          isOpen={isAddUserModalOpen}
+          handleClose={handleCloseAddUserModal}
+        />
       </Container>
     </>
   );

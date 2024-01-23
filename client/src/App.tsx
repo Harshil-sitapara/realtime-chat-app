@@ -9,7 +9,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/auth.context";
 import { ToastContainer } from "react-toastify";
 import { ChatContextProvider } from "./context/chat.context";
-import { ConfigContextProvider } from "./context/config.context";
+import { ConfigContext, ConfigContextProvider } from "./context/config.context";
 import{ Toaster } from "react-hot-toast";
 
 import AOS from 'aos'
@@ -20,6 +20,7 @@ export default function App() {
   useEffect(()=>{
     AOS.init()
   },[])
+
   return (
     <>
       <ConfigContextProvider>
