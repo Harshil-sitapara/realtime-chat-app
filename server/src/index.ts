@@ -6,6 +6,7 @@ import ChatRoute from "../routes/chat.routes";
 import MessageRoute from "../routes/message.routes";
 import cors from "cors";
 import bodyParser from "body-parser";
+import User from "../models/user.model";
 
 const app: Express = express();
 // const corsoptions = {
@@ -17,8 +18,14 @@ const app: Express = express();
 // };
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+    limit: "50mb",
+    parameterLimit: 50000,
+  })
+);
 dotenv.config();
 
 const port = process.env.PORT || 5000;
@@ -30,10 +37,6 @@ ConnectToDb(DBUrl);
 app.use("/api/users", UserRoute);
 app.use("/api/chats", ChatRoute);
 app.use("/api/message", MessageRoute);
-
-app.get("/", (req, res) => {
-  res.send("ok");
-});
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

@@ -1,46 +1,62 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Chat from "./pages/Chat";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
 import NavbarComponent from "./components/Navbar";
+import Header from "./components/Header.tsx";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/auth.context";
 import { ToastContainer } from "react-toastify";
 import { ChatContextProvider } from "./context/chat.context";
 import { ConfigContext, ConfigContextProvider } from "./context/config.context";
-import{ Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 import AOS from 'aos'
 import 'aos/dist/aos.css';
+import Landing from "./pages/Landing/index.tsx";
 
 export default function App() {
   const { user } = useContext(AuthContext);
-  useEffect(()=>{
+  const navigate = useNavigate();
+  useEffect(() => {
     AOS.init()
-  },[])
+  }, [])
 
   return (
     <>
-      <ConfigContextProvider>
-        <ChatContextProvider currentUser={user}>
-          <NavbarComponent />
-          <Container>
+      {window?.location.pathname === '/' ?
+        <ConfigContextProvider>
+          <ChatContextProvider currentUser={user}>
+            <Header />
             <Routes>
-              <Route path="/" element={user ? <Chat /> : <Login />} />
-              <Route
-                path="/register"
-                element={user ? <Chat /> : <Register />}
-              />
-              <Route path="/login" element={user ? <Chat /> : <Login />} />
-              <Route path="*" element={<Navigate to="/" />} />
+              <Route path="/" element={<Landing />} />
             </Routes>
-          </Container>
-          <ToastContainer />
-          <Toaster/>
-        </ChatContextProvider>
-      </ConfigContextProvider>
+            <ToastContainer />
+            <Toaster />
+          </ChatContextProvider>
+        </ConfigContextProvider>
+        :
+        <ConfigContextProvider>
+          <ChatContextProvider currentUser={user}>
+            <NavbarComponent />
+            <Container>
+              <Routes>
+                <Route path="/app" element={user ? <Chat /> : <Login />} />
+                <Route
+                  path="/register"
+                  element={user ? <Chat /> : <Register />}
+                />
+                <Route path="/login" element={user ? <Chat /> : <Login />} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </Container>
+            <ToastContainer />
+            <Toaster />
+          </ChatContextProvider>
+        </ConfigContextProvider>}
+
     </>
   );
 }

@@ -1,3 +1,4 @@
+
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Mukta:wght@500&family=Mulish:wght@900&family=Roboto:wght@400;500&display=swap");
 
 .form-inner {
@@ -224,7 +225,6 @@
   display: flex;
   justify-content: space-between;
 }
-
 
 .notifications-box h3 {
   font-weight: 700;
