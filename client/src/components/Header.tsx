@@ -23,7 +23,7 @@ const Header = () => {
                     </button>
                     <div className="navbar-collapse collapse" id="collapseNavbar"
                     >
-                        <ul className="navbar-nav">
+                        <ul className="navbar-nav navbar-nav-custom" style={{margin:"auto"}}>
                             <li className="nav-item active">
                                 <a className="nav-link" href="#">home</a>
                             </li>
@@ -36,7 +36,7 @@ const Header = () => {
                             </li>
                         </ul>
                         <ul className="navbar-nav ms-auto">
-                            <li className="nav-item">
+                            <li className="nav-item chatapp-btn-main">
                                 <button className="chatapp-btn">Chat App</button>
                             </li>
                         </ul>

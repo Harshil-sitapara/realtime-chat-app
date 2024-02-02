@@ -1,168 +1,19 @@
 import React from 'react'
 import "../../App.css"
+import bg from '../../assets/landing/bg.png'
 
 export default function Landing() {
     return (
         <>
             <div className="main-landing-container">
-                <h1 className=''>Hello Vanilla!</h1>
-                <div>
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-                    We use the same configuration as Parcel to bundle this sandbox, you can find more
-                    info about Parcel
-                    <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
+                <div className='main-hero'>
+                    <img src={bg} alt="bg image" className='bg-image' />
+                    <div className="left-hero">
+                        <h1 className='text-red-950'>
+                            Message privately
+                        </h1>
+                    </div>
+                    <div className="left-hero"></div>
                 </div>
             </div>
         </>

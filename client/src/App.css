@@ -1,31 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.main-landing-container{
-    background-color: rgba(236, 205, 160, 0.8);
-    height: 100%;
-    width: 100%;
+
+.main-landing-container {
+  background-color: rgba(252, 245, 235, 0.8);
+  height: 100vh;
+  width: 100%;
 }
+
 .navbar {
-    background-color: rgba(252, 245, 235, 0.8);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    position: sticky;
-    top: 0;
-  }
-  
-  .header-logo {
-    margin-left: 50px;
-  }
-  
+  background-color: rgba(252, 245, 235, 0.8);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  position: sticky;
+  top: 0;
+}
+
+.header-logo {
+  margin-left: 50px;
+}
+
+.chatapp-btn {
+  width: 150px;
+  height: 50px;
+  border-radius: 100px;
+  margin-right: 50px;
+  background-color: #25d366;
+  max-width: auto;
+
+}
+
+.navbar-nav a {
+  color: black;
+}
+
+.navbar-nav-custom {
+  width: 80%;
+  margin: auto !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-hero{
+  width: 96%;
+  height: 100%;
+  margin: auto;
+  padding-top: 32px;
+  position: relative;
+}
+.bg-image{
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  object-fit: fill;
+}
+
+@media (max-width: 768px) {
   .chatapp-btn {
-    width: 150px;
-    height: 50px;
-    border-radius: 100px;
-    margin-right: 50px;
-    background-color: #25d366;
+    margin-right: 0;
   }
-  .navbar-nav a {
-    color: black;
+.navbar-nav-custom {
+  width: 100%;
+}
+  .chatapp-btn-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+}
