@@ -8,6 +8,7 @@ import React, {
 import { BASE_API_URL, postRequest, user } from "../utils/services";
 // import { toast } from "react-toastify";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextProps {
   children: ReactNode;
@@ -18,6 +19,7 @@ export const AuthContext = createContext<any>(null);
 export const AuthContextProvider: React.FC<AuthContextProps> = ({
   children,
 }) => {
+  const navigate = useNavigate()
   const [user, setUser] = useState(null);
   const [registerError, setRegisterError] = useState("");
   const [isRegisterLoading, setIsRegisterLoading] = useState(false);
@@ -103,7 +105,14 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({
 
   const logoutUser = () => {
     localStorage.removeItem("User");
+    localStorage.setItem("isLightMode","true");
     setUser(null);
+    document.body.style.backgroundColor = "";
+    const rootElement = document?.getElementById("root");
+    if (rootElement) {
+      rootElement.style.backgroundColor = "";
+    }
+    navigate('/login')
   };
 
   return (

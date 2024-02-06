@@ -14,6 +14,7 @@ import { useFetchUserRecipient } from "../hooks/useFetchRecipient";
 import FilteredChat from "./FilteredChat";
 import AiChat from "./AiChat";
 import { AddUserModal } from "../components/Modals/AddUserModal";
+import NavbarComponent from "../components/Navbar";
 
 export interface userChatInterface {
   _id: String;
@@ -87,8 +88,8 @@ export default function Chat() {
 
   return (
     <>
-      <Container
-        className="mt-3"
+     <NavbarComponent />
+      <div
         style={{
           backgroundColor: isDarkMode ? "#2b2b2b" : "",
           color: isDarkMode ? "white" : "",
@@ -122,21 +123,21 @@ export default function Chat() {
         {!isUserChatsLoading && (
           <Stack
             direction="horizontal"
-            gap={4}
+            gap={1}
             className="align-items-start"
-            style={{ position: "relative", scrollBehavior: "auto" }}
+            style={{ position: "relative", scrollBehavior: "auto", margin: "auto", width: "98%", border: "1px solid black" }}
           >
             <Stack
               className="messages-box flex-grow-0 pe-3"
               gap={2}
               style={{
-                border: isDarkMode ? "1px dashed white" : "",
+                border: isDarkMode ? "1px solid white" : "",
               }}
             >
-              <h4>Chats</h4>
+              <h4 className="chat-heading">Chats</h4>
               <div
                 className="input-search-container"
-                style={{ backgroundColor: isDarkMode ? "#2b2b2b" : "#f5f5f5" }}
+              // style={{ backgroundColor: isDarkMode ? "#2b2b2b" : "#f5f5f5" }}
               >
                 <input
                   type="text"
@@ -145,16 +146,35 @@ export default function Chat() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onFocus={() => setSearchPaletteVisible(true)}
                   onBlur={() => setSearchPaletteVisible(false)}
-                  // disabled
+                // disabled
                 />
-                <button
+                {/* <button
                   type="button"
                   className={isDarkMode ? "btn btn-light" : "btn btn-dark"}
                   style={{ marginLeft: "10px" }}
                   // onClick={() => handleAddUser()}
                   onClick={() => handleOpenAddUserModal()}
+                > */}
+                {/* <AddIcon /> */}
+                <button
+                  title="Add New"
+                  className="group cursor-pointer outline-none"
+                  onClick={() => handleOpenAddUserModal()}
                 >
-                  <AddIcon />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="50px"
+                    height="50px"
+                    viewBox="0 0 24 24"
+                    className="stroke-zinc-400 fill-none group-hover:fill-zinc-800 group-active:stroke-zinc-200 group-active:fill-zinc-600 group-active:duration-0 duration-300"
+                  >
+                    <path
+                      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                      stroke-width="1.5"
+                    ></path>
+                    <path d="M8 12H16" stroke-width="1.5"></path>
+                    <path d="M12 16V8" stroke-width="1.5"></path>
+                  </svg>
                 </button>
               </div>
               {userChats?.length === 0 && (
@@ -186,7 +206,7 @@ export default function Chat() {
           isOpen={isAddUserModalOpen}
           handleClose={handleCloseAddUserModal}
         />
-      </Container>
+      </div>
     </>
   );
 }

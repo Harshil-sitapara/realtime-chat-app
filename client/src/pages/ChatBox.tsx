@@ -34,7 +34,7 @@ export default function Separator() {
   if (recipientUser?.length === 0) {
     return (
       <div className="noChatSelected">
-        <p>Select chat!</p>
+        <p className="text-cyan-700">Select chat!</p>
       </div>
     );
   }
@@ -85,13 +85,13 @@ export default function Separator() {
               <img
                 src={recipientUser?.profilePhoto?.url ? recipientUser?.profilePhoto?.url : Profile}
                 alt="Avatar"
-                height="35px"
-                width="35px"
+                height="100%"
+                width="100%"
                 style={{
                   borderRadius: "50%",
                   border: "1px solid grey",
                   padding:1,
-                  backgroundColor:"white"
+                  backgroundColor:"white",
                 }}
               />
               <div className="chatbox-name">{recipientUser?.name}</div>
@@ -146,7 +146,7 @@ export default function Separator() {
           </div> */}
         </div>
         <div className="text-box-main">
-          <div className="container" ref={chatContainerRef}>
+          <div className="" ref={chatContainerRef}>
             {messages?.length == 0 && (
               <div
                 style={{

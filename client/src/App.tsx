@@ -33,25 +33,20 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Landing />} />
             </Routes>
-            <ToastContainer />
-            <Toaster />
           </ChatContextProvider>
         </ConfigContextProvider>
         :
         <ConfigContextProvider>
           <ChatContextProvider currentUser={user}>
-            <NavbarComponent />
-            <Container>
-              <Routes>
-                <Route path="/app" element={user ? <Chat /> : <Login />} />
-                <Route
-                  path="/register"
-                  element={user ? <Chat /> : <Register />}
-                />
-                <Route path="/login" element={user ? <Chat /> : <Login />} />
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </Container>
+            <Routes>
+              <Route path="/app" element={user ? <Chat /> : <Login />} />
+              <Route
+                path="/register"
+                element={user ? <Chat /> : <Register />}
+              />
+              <Route path="/login" element={user ? <Chat /> : <Login />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
             <ToastContainer />
             <Toaster />
           </ChatContextProvider>

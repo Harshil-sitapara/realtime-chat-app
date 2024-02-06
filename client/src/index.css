@@ -1,14 +1,14 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Mukta:wght@500&family=Mulish:wght@900&family=Roboto:wght@400;500&display=swap");
 
 .form-inner {
   /* background-image: linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% ); */
-  background-color: #b5d4ea;
+  /* background-color: #b5d4ea; */
+  /* background: linear-gradient(to bottom right, #25d366, #ffffff); */
+  background-color: #25d366;
   padding: 3%;
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-
 /* All users */
 .all-users {
   display: flex;
@@ -133,10 +133,10 @@
 .messages-box {
   max-height: 85vh;
   min-height: 85vh;
-  /* border-right: 1px solid black; */
-  border: 1px dashed black;
+  border-right: 1px solid black;
+  /* border: 1px solid black; */
   padding: 12px;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   position: relative;
   overflow-y: auto;
 }
@@ -303,15 +303,20 @@
 .detail-container {
   padding-left: 30%;
 }
+.chat-heading {
+  font-size: 30px;
+  font-weight: 500;
+}
 
 /* Chatbox style */
 .chatbox {
   display: flex;
   justify-content: space-between;
-  border: 1px dashed black;
-  border-radius: 8px;
+  /* border: 1px solid black; */
+  /* border-radius: 8px; */
+  border-right: 1px solid black;
   max-height: 85vh;
-  max-width: 54vw;
+  max-width: 100%;
 }
 .stack-container {
   height: 100%;
@@ -321,6 +326,7 @@
   height: 10%;
   border-bottom: 1px solid black;
   position: relative;
+  padding: 4px 0px;
 }
 
 .chat-options {
@@ -402,6 +408,8 @@
   vertical-align: middle;
   padding-top: 1%;
   margin-left: 3%;
+  max-width: 45px;
+  max-height: 45px;
 }
 .chatbox-name {
   padding-left: 2%;
@@ -601,12 +609,13 @@
   .chatbox .container {
     width: 903px;
   }
+  
 }
 
-@media (max-width: 775px) {
+@media (max-width: 675px) {
   .chatbox,
   .noChatSelected {
-    /* display: none; */
+    display: none;
   }
   .messages-box {
     width: 100%;
@@ -634,11 +643,11 @@
 /*  */
 ::-webkit-scrollbar {
   width: 10px;
+  background: transparent;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  /* background: #f1f1f1;  */
   background: transparent;
 }
 
