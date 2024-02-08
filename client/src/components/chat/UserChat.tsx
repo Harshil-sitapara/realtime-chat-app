@@ -12,6 +12,7 @@ import { ConfigContext } from "../../context/config.context";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
+import BadgeAvatars from "./Avatar";
 
 interface UserChatProps {
   chat: userChatInterface;
@@ -44,7 +45,7 @@ const UserChat: React.FC<UserChatProps> = ({ chat, userInfo, index }) => {
   //   // const filteredChats = recipientUser?.name === searchTerm;
   //   // console.log("filteredChats",filteredChats)
   //   console.log("filteredChat", filteredChat)
-
+console.log("currentChat",currentChat)
   const unReadNotification = unReadNotifications(notifications);
   const particularUserUnreadNotifications = unReadNotification.filter(
     (n) => n.senderId === recipientUser?._id
@@ -53,7 +54,7 @@ const UserChat: React.FC<UserChatProps> = ({ chat, userInfo, index }) => {
   const { latestMessage } = useFetchLatestMessage(chat);
   const truncateTextFunc = (message: any) => {
     return message && message.length > 10
-      ? `${message.slice(0, 10)}...`
+      ? `${message.slice(0, 20)}...`
       : message;
   };
 
@@ -92,75 +93,99 @@ const UserChat: React.FC<UserChatProps> = ({ chat, userInfo, index }) => {
   }));
 
   return (
-    <Stack
-      direction="horizontal"
-      className={`user-card align-items-center p-2 justify-content-between ${
-        index === 0 ? "first-chat" : ""
-      }`}
-      role="button"
-      // data-aos="fade-up"
-      onClick={() => {
-        if (particularUserUnreadNotifications?.length !== 0) {
-          markSpecificUserNotificationsAsRead(
-            particularUserUnreadNotifications,
-            notifications
-          );
-        }
-      }}
-    >
-      <div className="d-flex">
-        <div className="me-2 avatar-container">
+    // <Stack
+    //   direction="horizontal"
+    //   className={`user-card align-items-center p-2 justify-content-between ${
+    //     index === 0 ? "first-chat" : ""
+    //   }`}
+    //   role="button"
+    //   // data-aos="fade-up"
+    //   onClick={() => {
+    //     if (particularUserUnreadNotifications?.length !== 0) {
+    //       markSpecificUserNotificationsAsRead(
+    //         particularUserUnreadNotifications,
+    //         notifications
+    //       );
+    //     }
+    //   }}
+    // >
+    //   <div className="d-flex">
+    //    <BadgeAvatars profilePhoto={recipientUser?.profilePhoto?.url}/>
+    //     <div className="text-content detail-container">
+    //       <div className="name">{recipientUser?.name}</div>
+    //       {/* <div className="text">{latestMessage?.text}</div> */}
+    //       <div className="text">{truncateTextFunc(latestMessage?.text)}</div>
+    //     </div>
+    //   </div>
+    //   <div className="d-flex flex-column align-items-end">
+    //     <div className="date">
+    //       {latestMessage && moment(latestMessage?.createdAt).calendar()}
+    //     </div>
+    //     {particularUserUnreadNotifications.length !== 0 && (
+    //       <div
+    //         className={
+    //           particularUserUnreadNotifications.length !== 0
+    //             ? "this-user-notifications"
+    //             : ""
+    //         }
+    //       >
+    //         {particularUserUnreadNotifications &&
+    //           particularUserUnreadNotifications.length}
+    //       </div>
+    //     )}
+    //   </div>
+
+    // </Stack>
+    <div className={`flex cursor-pointer items-center rounded-[5px] py-[10px] px-1 hover:bg-gray-2`} onClick={() => {
+      if (particularUserUnreadNotifications?.length !== 0) {
+        markSpecificUserNotificationsAsRead(
+          particularUserUnreadNotifications,
+          notifications
+        );
+      }
+    }}>
+      <div
+        className="relative h-[42px] w-[16%] rounded-full"
+      >
+        <div
+          className="flex mr-4 h-[40px] w-full max-w-[40px] overflow-auto rounded-full border-1 border-black"
+        >
           <img
-            src={
-              recipientUser?.profilePhoto?.url
-                ? recipientUser?.profilePhoto?.url
-                : Profile
-            }
-            alt="Avatar"
-            height="40px"
-            width="40px"
-            style={{
-              border: "1px solid grey",
-              borderRadius: "50%",
-              // padding: 2,
-              backgroundColor: "white",
-            }}
+            src={recipientUser?.profilePhoto?.url ? recipientUser?.profilePhoto?.url : Profile}
+            alt="avatar"
+            className="object-cover object-center w-full h-full"
           />
-          {/* "user-online" */}
-            <div
-              className={
-                onlineUsers?.some(
-                  (user: onlineUsers) => user?.userId === recipientUser?._id
-                )
-                  ? "user-online"
-                  : ""
-              }
-            ></div>
         </div>
-        <div className="text-content detail-container">
-          <div className="name">{recipientUser?.name}</div>
-          {/* <div className="text">{latestMessage?.text}</div> */}
-          <div className="text">{truncateTextFunc(latestMessage?.text)}</div>
-        </div>
+        {onlineUsers?.some(
+          (user: onlineUsers) => user?.userId === recipientUser?._id
+        ) && <span
+          className="absolute top-0 right-0 block h-[13px] w-[13px] rounded-full border-[2.3px] border-white dark:border-dark bg-[#219653]"
+        ></span>}
+
       </div>
-      <div className="d-flex flex-column align-items-end">
-        <div className="date">
-          {latestMessage && moment(latestMessage?.createdAt).calendar()}
+
+      <div className="w-full pl-4">
+        <div className="mb-1 flex justify-between">
+          <h5 className="text-sm font-medium text-dark dark:text-white">
+            {recipientUser?.name}
+          </h5>
+          <span className={`text-xs text-body-color dark:text-dark-6 `}>
+            {latestMessage && moment(latestMessage?.createdAt).calendar()}
+          </span>
         </div>
-        {particularUserUnreadNotifications.length !== 0 && (
-          <div
-            className={
-              particularUserUnreadNotifications.length !== 0
-                ? "this-user-notifications"
-                : ""
-            }
-          >
+        <div className="flex justify-between">
+          <p className={`text-sm text-dark dark:text-white ${particularUserUnreadNotifications.length > 0 && 'font-bold'}`}>
+            {truncateTextFunc(latestMessage?.text)}
+          </p>
+          {particularUserUnreadNotifications.length > 0 && <span className="flex h-4 w-full max-w-[16px] items-center justify-center rounded-full bg-primary text-[10px] font-medium leading-none text-white">
             {particularUserUnreadNotifications &&
               particularUserUnreadNotifications.length}
-          </div>
-        )}
+          </span>}
+
+        </div>
       </div>
-    </Stack>
+    </div>
+
   );
 };
 

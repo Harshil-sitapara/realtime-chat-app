@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/auth.context";
 import { toast } from "react-hot-toast";
 import logo from '../assets/logo1.png'
@@ -26,8 +26,8 @@ const Register = () => {
     const file = e.target.files[0];
 
     if (file.size > 30 * 1024) {
-        showToastMessage("Please upload an image smaller than 30kb.");
-        return;
+      showToastMessage("Please upload an image smaller than 30kb.");
+      return;
     }
     TransformFile(file);
   };
@@ -57,7 +57,7 @@ const Register = () => {
             registerUser(`/users/register`, registerInfo);
           }}>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">Name</label>
+              <label className="block text-sm font-medium leading-6 text-gray-900">Username</label>
               <div className="mt-2">
                 <input id="name" name="name" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-4"
                   placeholder="Enter your username" onChange={(e) => {
@@ -96,14 +96,18 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block mb-2 text-sm font-medium text-black" htmlFor="file_input">Profile picture</label>
+              {/* <label className="block mb-2 text-sm font-medium text-black" htmlFor="file_input">Profile picture</label>
               <input className="block w-full text-sm py-1.5 text-gray-900 border border-gray-300 rounded-lg cursor-pointer ring-gray-300 bg-white focus:outline-none pl-4" id="file_input" type="file" onChange={handleImageUpload} />
-              <p className="mt-1 text-sm text-[#040404bf] opacity-1" id="file_input_help">* PNG, JPG(MAX. 30kb).</p>
+              <p className="mt-1 text-sm text-[#040404bf] opacity-1" id="file_input_help">* PNG, JPG(MAX. 30kb).</p> */}
+              <div>
+              <label className="block mb-2 text-sm font-medium text-black" htmlFor="file_input">Profile picture</label>
+                <input className="form-control focus:outline-none outline-none shadow-sm" type="file" id="formFile" onChange={handleImageUpload}/>
+                <p className="mt-1 text-sm text-[#040404bf] opacity-1" id="file_input_help">* PNG, JPG(MAX. 30kb).</p>
+              </div>
             </div>
-
             <p className="mt-10 text-left text-sm text-gray-500">
               Already have an account? {"  "}
-              <Link to="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Login</Link>
+              <Link to="/login" className="font-semibold leading-6 text-green-500 hover:text-green-400">Login</Link>
             </p>
             <div>
               <button type="submit" className="flex w-full justify-center rounded-md bg-green-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{isRegisterLoading ? <CircularProgress color="info" size={'23px'} /> : "Sign up"}</button>

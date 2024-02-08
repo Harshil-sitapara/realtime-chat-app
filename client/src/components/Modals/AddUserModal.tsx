@@ -1,16 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import Avatar from "@mui/material/Avatar";
 import { AuthContext } from "../../context/auth.context";
-import { userChatInterface } from "../../pages/Chat";
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { ConfigContext } from "../../context/config.context";
-import { Logout, Tune } from "@mui/icons-material";
 import { ChatContext } from "../../context/chat.context";
 import { postRequest } from "../../utils/services";
-import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 
 interface ProfileModalProps {
@@ -19,50 +13,46 @@ interface ProfileModalProps {
 }
 
 const AddUserModal: React.FC<ProfileModalProps> = ({ isOpen, handleClose }) => {
-  const { user, logoutUser } = useContext(AuthContext);
-  const [userEmail, setUserEmail] = useState("");
+  const { user } = useContext(AuthContext);
+  const [userEmail, setUserEmail] = useState<string>("");
   const { createChat, userChats } = useContext(ChatContext);
   const { isDarkMode } = useContext(ConfigContext);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    // Focus on the input when the modal opens
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isOpen]);
 
   const handleAddUserWithEmail = async () => {
-    if (userEmail) {
-      console.log("Email",userEmail)
-      const response: any = await postRequest("/users/findByEmail",  {userEmail} );
-      if (response?.error) {
-        console.log("Error while finding user with email!", response?.error);
-      }
-      if (!response?.data.user) {
-        toast.error("User not found");
-        return;
-      }
-      if (user.email === userEmail) {
-        toast.error(`Already logged in with ${userEmail}`);
-        setUserEmail("");
-        handleClose();
-        return;
-      }
-      userChats?.forEach((chat: any) => {
-        if (chat?.members.includes(response?.data.user._id)) {
-          toast.error(`Already chat with ${response?.data.user.name}!`);
-          setUserEmail("");
-          return;
-        }
-      });
-      if (userChats.member)
-        await createChat(user?._id, response?.data.user._id);
-      setUserEmail("");
-      handleClose();
-      console.log("Response with email", response?.data.user);
-    } else {
+    if (!userEmail) {
       toast.error("Enter email!");
+      return;
+    }
+    try {
+      const response: any = await postRequest("/users/findByEmail", { userEmail });
+      if (response?.data.user) {
+        if (user?.email === userEmail) {
+          toast.error(`Already logged in as ${userEmail}`);
+          setUserEmail("")
+        } else {
+          const userAlreadyExists = userChats?.some((chat: any) => chat?.members.includes(response?.data.user._id));
+          if (userAlreadyExists) {
+            toast.error(`Already chat with ${response?.data.user.name}!`);
+          } else {
+            await createChat(user?._id, response?.data.user._id);
+            toast.success("User added successfully!");
+            setUserEmail("");
+            handleClose();
+          }
+        }
+      } else {
+        toast.error("User not found");
+      }
+    } catch (error) {
+      console.error("Error while finding user with email!", error);
+      toast.error("Error while finding user with email!");
     }
   };
 
@@ -80,14 +70,14 @@ const AddUserModal: React.FC<ProfileModalProps> = ({ isOpen, handleClose }) => {
           style={{ background: isDarkMode ? "#2b2b2b" : "white" }}
         >
           <h3
-            id="add-user-modal-title"
-            style={{ color: isDarkMode ? "white" : "black" }}
+            id="add-user-modal-title "
+            style={{ color: isDarkMode ? "white" : "black", fontSize: '30px', fontWeight: "500" }}
           >
             Add User
           </h3>
           <input
             type="email"
-            className="form-control mb-3"
+            className="form-control my-3"
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
             placeholder="Enter Email address"
@@ -106,4 +96,4 @@ const AddUserModal: React.FC<ProfileModalProps> = ({ isOpen, handleClose }) => {
   );
 };
 
-export { AddUserModal };
+export { AddUserModal }

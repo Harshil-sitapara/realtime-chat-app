@@ -52,7 +52,7 @@ function NavbarComponent() {
   };
 
   return (
-    <nav className={`h-16 mb-2 main-navbar ${isDarkMode ? 'bg-dark' : 'bg-[#789461]'}`} >
+    <nav className={`h-16 mb-3 main-navbar ${isDarkMode ? 'bg-dark' : 'bg-[#F8FAFC]'}`} >
       <div className="max-w-7xl mx-auto px-4 backdrop-blur-sm flex justify-between items-center h-full">
         <h2 className="text-lg font-bold">
           <Link to="/app" className="text-white">
@@ -71,7 +71,7 @@ function NavbarComponent() {
                     localStorage.setItem("isLightMode", isDarkMode);
                   }}
                 >
-                  {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+                  {/* {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />} */}
                 </button>
               </Tooltip>
               <Tooltip title={user?.name} arrow>
@@ -80,7 +80,6 @@ function NavbarComponent() {
                   src={user?.profilePhoto?.url}
                   onClick={handleClick}
                   style={{ cursor: "pointer", backgroundColor: "white" }}
-                  title={user.name}
                 />
               </Tooltip>
               <Menu
@@ -111,7 +110,7 @@ function NavbarComponent() {
                 }}
               >
                 {options?.map((option, index) => (
-                  <>
+                  <div key={index}>
                     {index > 0 && (
                       <Divider
                         style={{
@@ -165,7 +164,7 @@ function NavbarComponent() {
                         option
                       )}
                     </MenuItem>
-                  </>
+                  </div>
                 ))}
               </Menu>
             </>

@@ -8,14 +8,15 @@ export default function Button() {
       <a href={"/app"}>
         <button className="chatapp-btn">Chat App</button>
       </a>
-      {/* <nav className='main-btn'>
-        <ul>
-          <li>
-            contact
-            <span></span>
-          </li>
-        </ul>
-      </nav> */}
+    </>
+  )
+}
+export function FooterButton() {
+  return (
+    <>
+      <a href={"/app"}>
+        <button className="chatapp-btn" style={{color:"white"}}>Chat App</button>
+      </a>
     </>
   )
 }

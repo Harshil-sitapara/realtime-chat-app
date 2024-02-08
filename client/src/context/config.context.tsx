@@ -12,8 +12,10 @@ export const ConfigContextProvider: React.FC<ConfigContextProps> = ({
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchPaletteVisible, setSearchPaletteVisible] = useState(false);
+  const [isChatSelected, setIsChatSelected] = useState(false);
 
-  const handleSearchUsers = () => {};
+
+  const handleSearchUsers = () => { };
 
   return (
     <>
@@ -25,6 +27,8 @@ export const ConfigContextProvider: React.FC<ConfigContextProps> = ({
           setSearchPaletteVisible,
           searchTerm,
           isSearchPaletteVisible,
+          isChatSelected,
+          setIsChatSelected
         }}
       >
         {children}

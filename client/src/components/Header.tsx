@@ -33,7 +33,7 @@ export default function Header() {
                         </a>
                         <div className="md:hidden">
                             <button
-                                className="p-2 text-gray-700 rounded-md outline-none"
+                                className="p-2 rounded-md outline-none"
                                 onClick={() => setNavbar(!navbar)}
                             >
                                 {navbar ? (
@@ -78,12 +78,12 @@ export default function Header() {
                             <li>
                                 <a href="javascript:void(0)" className="transition-colors hover:text-[#25d366]">Home</a>
                             </li>
-                            <li>
+                            {/* <li>
                                 <a href="javascript:void(0)" className="transition-colors hover:text-[#25d366]">Blog</a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)" className="transition-colors hover:text-[#25d366]">About US</a>
-                            </li>
+                            </li> */}
                         </ul>
 
                         <div className="mt-3 space-y-2 md:hidden pb-[12px] flex justify-center">

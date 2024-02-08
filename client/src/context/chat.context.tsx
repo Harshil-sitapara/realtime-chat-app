@@ -11,6 +11,7 @@ import { getRequest, BASE_API_URL, postRequest } from "../utils/services";
 import { AuthContext } from "./auth.context";
 import { userChatInterface } from "../pages/Chat";
 import { io } from "socket.io-client";
+import { ConfigContext } from "./config.context";
 
 export interface ChatContextProps {
   children: ReactNode;
@@ -67,6 +68,7 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
   const [socket, setSocket] = useState<any>(null);
   const [onlineUsers, setOnlineUsers] = useState<onlineUsers[]>([]);
   const [notifications, setNotifications] = useState<notification[]>([]);
+  const {setIsChatSelected} = useContext(ConfigContext)
 
   // console.log("notification", notifications);
   // console.log("notification", typeof []);
@@ -287,6 +289,7 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
       );
 
       updateCurrentChat(desireChat);
+      setIsChatSelected(true)
       setNotifications(mNotifications);
     },
     []
@@ -331,6 +334,7 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
         markNotificationAsRead,
         markSpecificUserNotificationsAsRead,
         newMessage,
+        setCurrentChat
       }}
     >
       {children}

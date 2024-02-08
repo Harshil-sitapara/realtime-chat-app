@@ -1,5 +1,5 @@
 import { Badge, Tooltip } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ChatContext, notification } from "../context/chat.context";
 import { AuthContext } from "../context/auth.context";
 import unReadNotifications from "../utils/unReadNotifications";
@@ -36,11 +36,11 @@ export default function Notifications() {
           style={{ cursor: "pointer" }}
         >
           {unReadNotification?.length !== 0 ? (
-            <Badge badgeContent={unReadNotification?.length} color="primary">
-              <ChatOutlinedIcon/>
+            <Badge badgeContent={unReadNotification?.length} color="success">
+              <ChatOutlinedIcon style={{color:"black"}}/>
             </Badge>
           ) : (
-            <ChatOutlinedIcon/>
+            <ChatOutlinedIcon style={{color:"black"}}/>
           )}
         </a>
       </Tooltip>

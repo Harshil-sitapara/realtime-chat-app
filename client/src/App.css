@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities";
 
 .main-landing-container {
-  background-color: rgba(252, 245, 235, 0.8);
+  background-color: #fcf5ebcc;
   height: 100vh;
   width: 100%;
 }
@@ -21,6 +21,9 @@ body {
   width: 100%;
   height: 11%;
 } */
+.main-navbar{
+  box-shadow:  0 -10px 20px -2px rgba(0,0,0,.75);
+}
 
 .header-logo {
   margin-left: 50px;
@@ -35,16 +38,24 @@ body {
   height: 50px;
   border-radius: 100px;
   margin-right: 10px;
-  background: linear-gradient(#25d366, #25d366) bottom / 100% 0 no-repeat,
-    #25d366;
-  transition: background 0.3s ease;
+  /* background: linear-gradient(#25d366, #25d366) bottom / 100% 0 no-repeat,
+    #25d366; */
+  background: transparent;
+  transition: ease-out 0.5s;
   cursor: pointer;
-  color: #ffffff;
+  color: black;
+  display: inline-block;
+  box-shadow: inset 0 0 0 0 #25d366;
+  border: 2px solid #25d366;
 }
-
 .chatapp-btn:hover {
-  background: linear-gradient(#000000, #000000) bottom / 100% 100% no-repeat,
-    #000000;
+  background: transparent;
+  color: white;
+  box-shadow: inset 0 -100px 0 0 #25d366;
+  border: none;
+}
+.chatapp-btn:active {
+  transform: scale(0.9);
 }
 
 .navbar-nav a {
@@ -62,7 +73,7 @@ body {
   width: 96%;
   height: 100%;
   margin: auto;
-  padding-top: 7%;
+  padding-top: 6.5%;
 }
 .chat-messages-first {
   width: 96%;
@@ -264,8 +275,8 @@ body {
     backdrop-filter: blur(4px);
   }
   .main-hero {
-    padding-top: 76px;
-    height: 90%;
+    padding-top: 10%;
+    height: 98%;
   }
   .left-hero h1 {
     font-size: 57px !important;
@@ -291,10 +302,10 @@ body {
     width: 70%;
     margin: auto;
   }
-  .chat3MessageImage1Short{
+  .chat3MessageImage1Short {
     padding-top: 20px;
   }
-  .chat3MessageImage2Short{
+  .chat3MessageImage2Short {
     padding-bottom: 20px;
   }
 }
@@ -348,7 +359,7 @@ body {
     flex-direction: column-reverse;
   }
   .speck-freely-main .right-main {
-    padding-left: 2%;
+    padding-left: 5%;
     padding-top: 5%;
   }
   .speck-freely-main .left-main img {
@@ -369,7 +380,8 @@ body {
     align-items: center;
   }
   .main-hero {
-    margin-top: 12px;
+    margin-top: 2%;
+    height: 96%;
   }
 }
 
@@ -417,5 +429,12 @@ body {
   }
   .left-hero {
     top: 65%;
+  }
+}
+
+
+@media (min-width:1400px){
+  .main-hero{
+    padding-top: 100px;
   }
 }

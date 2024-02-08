@@ -105,7 +105,7 @@ export default function Login() {
 
               <p className="mt-10 text-left text-sm text-gray-500">
                 Don't have an account? {"  "}
-                <Link to="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Sign up</Link>
+                <Link to="/register" className="font-semibold leading-6 text-green-500 hover:text-green-400">Sign up</Link>
               </p>
               <div>
                 <button type="submit" className="flex w-full justify-center rounded-md bg-green-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{isLoginLoading ? <CircularProgress color="info" size={'23px'} /> : "Sign in"}</button>

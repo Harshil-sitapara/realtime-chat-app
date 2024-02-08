@@ -3,7 +3,7 @@ import "../../App.css"
 import bg from '../../assets/landing/bg.png'
 import bg1 from '../../assets/landing/bg-1.png'
 import bg2 from '../../assets/landing/bg-2.png'
-import Button from '../../components/Button'
+import Button, { FooterButton } from '../../components/Button'
 import image1 from '../../assets/landing/chat_img-1.png'
 import image2 from '../../assets/landing/chat_img-2.png'
 import image3 from '../../assets/landing/chat_img-3.png'
@@ -38,7 +38,7 @@ export default function Landing() {
                                 Message privately
                             </h1>
                             <p className='pt-3'>Simple, reliable, private messaging and calling for free*, available all over the world.</p>
-                            <div className='pt-4'><Button /></div>
+                            <div className='pt-4'><FooterButton /></div>
                         </div>
                         <div className="right-hero">
                             <div className="right-images-main">
@@ -71,8 +71,7 @@ export default function Landing() {
                     <img src={ChatMessagesImage1} alt="chat messages image" className='chatMessageImage2' data-aos="fade-up" />
                     <img src={Chat3MessagesImage1} alt="chat messages image" className='chat3MessageImage2' data-aos="fade-up" data-aos-duration="1000" />
                     <img src={Chat3MessagesImage1Short} alt="chat messages image" className='chat3MessageImage2Short' data-aos="fade-up" data-aos-duration="1000" />
-                    </section>
-                {/*  */}
+                </section>
                 <section className="speck-freely-main">
                     <div className="left-main" data-aos="fade-up"
                         data-aos-anchor-placement="bottom-bottom">
