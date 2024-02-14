@@ -151,7 +151,7 @@ console.log("currentChat",currentChat)
           className="flex mr-4 h-[40px] w-full max-w-[40px] overflow-auto rounded-full border-1 border-black"
         >
           <img
-            src={recipientUser?.profilePhoto?.url ? recipientUser?.profilePhoto?.url : Profile}
+            src={recipientUser?.profilePhoto?.url ||  Profile}
             alt="avatar"
             className="object-cover object-center w-full h-full"
           />

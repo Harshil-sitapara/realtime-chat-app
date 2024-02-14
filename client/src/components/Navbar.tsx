@@ -13,6 +13,7 @@ import { ProfileModal } from "./Modals/ProfileModel";
 import logo from '../assets/logo1.png'
 import lightLogo from '../assets/light-logo.png'
 import textBg from '../assets/textBg.jpg'
+import AvatarImage from "./../assets/profile.svg";
 
 
 const ITEM_HEIGHT = 48;
@@ -52,8 +53,10 @@ function NavbarComponent() {
   };
 
   return (
-    <nav className={`h-16 mb-3 main-navbar ${isDarkMode ? 'bg-dark' : 'bg-[#F8FAFC]'}`} >
-      <div className="max-w-7xl mx-auto px-4 backdrop-blur-sm flex justify-between items-center h-full">
+    // <nav className={`h-16 mb-3 main-navbar bg-[url('https://img.freepik.com/free-photo/glass-background-with-frosted-pattern_53876-132924.jpg
+    // ')] bg-no-repeat bg-cover w-full`} >
+    <nav className="h-16 mb-3 main-navbar bg-white">
+      <div className="max-w-full px-4 backdrop-blur-sm flex justify-between items-center h-full">
         <h2 className="text-lg font-bold">
           <Link to="/app" className="text-white">
             <img className="mx-auto h-14 w-auto" src={isDarkMode ? lightLogo : logo} alt="Quick talk" />
@@ -77,7 +80,7 @@ function NavbarComponent() {
               <Tooltip title={user?.name} arrow>
                 <Avatar
                   alt={`${user.name} avatar`}
-                  src={user?.profilePhoto?.url}
+                  src={user?.profilePhoto?.url || AvatarImage}
                   onClick={handleClick}
                   style={{ cursor: "pointer", backgroundColor: "white" }}
                 />
@@ -140,7 +143,7 @@ function NavbarComponent() {
                           >
                             <Avatar
                               alt={user.name}
-                              src={user?.profilePhoto?.url}
+                              src={user?.profilePhoto?.url || AvatarImage}
                               style={{ width: 24, height: 24 }}
                             />
                           </ListItemIcon>

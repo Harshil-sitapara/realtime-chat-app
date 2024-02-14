@@ -275,7 +275,6 @@
 
 
 import React, { useContext, useEffect, useRef, useState } from "react";
-// import { Stack } from "react-bootstrap";
 import Profile from "../assets/profile.svg";
 import { AuthContext } from "../context/auth.context";
 import { ChatContext, onlineUsers } from "../context/chat.context";
@@ -355,7 +354,7 @@ export default function Separator() {
                   className="mr-4 h-[40px] w-full max-w-[40px] overflow-auto rounded-full border-1 border-black"
                 >
                   <img
-                    src={recipientUser?.profilePhoto?.url ? recipientUser?.profilePhoto?.url : Profile}
+                    src={recipientUser?.profilePhoto?.url || Profile}
                     alt="avatar"
                     className="object-cover object-center w-full h-full"
                   />
@@ -397,7 +396,7 @@ export default function Separator() {
                       className="relative mr-[14px] h-10 w-full max-w-[40px] rounded-full border-1 border-black"
                     >
                       <img
-                        src={message?.senderId == user._id ? user?.profilePhoto.url : recipientUser?.profilePhoto?.url}
+                        src={message?.senderId == user._id ? user?.profilePhoto?.url || Profile : recipientUser?.profilePhoto?.url || Profile}
                         alt="avatar"
                         className="object-cover object-center w-full h-full rounded-full"
                       />
@@ -419,7 +418,7 @@ export default function Separator() {
                 ))}
               </div>
             </div>
-            <div className="w-full sticky bottom-0 py-3 z-10 bg-[#F8FAFC]">
+            <div className="w-full sticky bottom-0 py-3 z-10 bg-white">
               <form
                 className="flex items-center justify-between space-x-[14px] rounded-md bg-white dark:bg-dark-2 p-2 drop-shadow-md dark:shadow-box-dark w-[95%] mx-auto "
               >

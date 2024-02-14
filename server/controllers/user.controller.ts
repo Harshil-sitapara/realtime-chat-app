@@ -23,10 +23,12 @@ const registerUser = async (req: Request, res: Response) => {
     if (!validator.isEmail(email)) {
       return res.json({ error: "invalid Email!" });
     }
-
-    const imageRes = await cloudinary.uploader.upload(profilePhoto, {
-      upload_preset: "ChatApp",
-    });
+    let imageRes = {};
+    if(profilePhoto){
+      imageRes = await cloudinary.uploader.upload(profilePhoto, {
+        upload_preset: "ChatApp",
+      });
+    }
     const createdUser = new User({
       name,
       email,
@@ -83,7 +85,7 @@ const findUser = async (req: Request, res: Response) => {
 
 const findUserByEmail = async (req: Request, res: Response) => {
   try {
-    const email  = req.body.userEmail;
+    const email = req.body.userEmail;
     const user = await User.findOne({ email });
     res.status(200).json({ user });
   } catch (error) {

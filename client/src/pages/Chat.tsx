@@ -266,9 +266,9 @@ export default function Chat() {
   return (
     <>
       <NavbarComponent />
-      <section className="flex w-full justify-between gap-3">
+      <section className="flex w-full justify-between gap-3 ">
         <div className={`pl-4 w-[28%] max-lg:w-[100%] max-lg:pr-4 ${isChatSelected && 'max-lg:hidden'}`}>
-          <div className="shadow-1 shadow-box-dark max-md:w-full rounded-lg bg-white py-8 px-6 h-[85vh]">
+          <div className="shadow-1 shadow-box-dark max-md:w-full rounded-lg bg-white py-8 px-6 h-[85vh] overflow-hidden">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-xl font-semibold text-dark ">
                 Messages
@@ -326,7 +326,7 @@ export default function Chat() {
               </button>
             </form>
 
-            <div className="space-y-3">
+            <div className="space-y-3 flex flex-col overflow-scroll w-[100%] max-h-[300px] min-h-[500px] pb-[20px] max-sm:pb-[4rem] ">
               {userChats?.length === 0 && (
                 <div className="text-center opacity-50">
                   <p>No chats found!</p>

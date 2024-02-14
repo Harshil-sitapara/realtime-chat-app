@@ -8,6 +8,7 @@ import { userChatInterface } from "../../pages/Chat";
 import { Button } from "@mui/material";
 import { ConfigContext } from "../../context/config.context";
 import { Logout } from "@mui/icons-material";
+import AvatarImage from '../../assets/profile.svg'
 
 interface ProfileModalProps {
   open: boolean;
@@ -51,7 +52,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ open, handleClose }) => {
         <Box sx={style}>
           <Avatar
             alt={user?.name}
-            src={user?.profilePhoto?.url}
+            src={user?.profilePhoto?.url || AvatarImage}
             sx={{ width: 70, height: 70, mb: 2, border: "1px solid black" }}
           />
           <Typography

@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 import http from "http";
 
 const io = new Server(3000,{
-  cors: "http://localhost:5000", // node js back-end URL
+  cors: "http://192.168.29.116:5000", // node js back-end URL
   extraHeaders: {
     "Access-Control-Allow-Origin": "http://127.0.0.1:5173",
   },

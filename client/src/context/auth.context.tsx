@@ -54,6 +54,7 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({
     setRegisterError("");
     try {
       const response: any = await postRequest(url, body);
+       console.log("respo",response)
       if (response?.error) {
         setTimeout(() => {
           setIsRegisterLoading(false);
@@ -67,12 +68,14 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({
         toast.success("Registration successful!")
       }
       localStorage.setItem("User", JSON.stringify(response.data));
-      setUser(response.data);
+     
+      setUser(response?.data);
       return response;
     } catch (error) {
       console.log("Error while register", error);
       setRegisterError(error as string);
       toast.error("Something went wrong!")
+      // window.location.reload()
     }
   };
 
@@ -97,9 +100,10 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({
       setUser(response.data);
       return response;
     } catch (error) {
-      console.log("Error while register", error);
+      console.log("Error while login", error);
       setLoginError(error as string);
       toast.error("Something went wrong!")
+      window.location.reload()
     }
   };
 

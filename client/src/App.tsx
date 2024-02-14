@@ -51,7 +51,6 @@ export default function App() {
             <Toaster />
           </ChatContextProvider>
         </ConfigContextProvider>}
-
     </>
   );
 }
