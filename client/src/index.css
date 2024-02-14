@@ -218,7 +218,7 @@
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   background: #4f4f51;
   color: white;
-  z-index: 50;
+  z-index: 99999;
   border-radius: 3px;
   overflow-y: auto;
 }

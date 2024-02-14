@@ -6,7 +6,6 @@ import React, {
   useState,
 } from "react";
 import { BASE_API_URL, postRequest, user } from "../utils/services";
-// import { toast } from "react-toastify";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 

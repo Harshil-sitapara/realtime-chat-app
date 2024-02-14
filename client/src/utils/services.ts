@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_API_URL = "http://192.168.29.116:5000/api";
+export const BASE_API_URL = "http://localhost:5000/api";
 // http://localhost:5173/
 export interface user {
   name: string;

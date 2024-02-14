@@ -70,9 +70,6 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
   const [notifications, setNotifications] = useState<notification[]>([]);
   const {setIsChatSelected} = useContext(ConfigContext)
 
-  // console.log("notification", notifications);
-  // console.log("notification", typeof []);
-  // console.log("onlineUsers", typeof onlineUsers);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -110,15 +107,11 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
 
   useEffect(() => {
     const getMessages = async () => {
-      // setMessagesLoading(true);
       setMessageError("");
 
       const response: any = await getRequest(
         `${BASE_API_URL}/message/${currentChat?._id}`
       );
-      // setTimeout(() => {
-      //   setMessagesLoading(false);
-      // }, 200);
 
       if (response?.error) {
         setTimeout(() => {
@@ -133,7 +126,10 @@ export const ChatContextProvider: React.FC<ChatContextProps> = ({
 
   //NOTE - Initial socket
   useEffect(() => {
-    const newSocket = io(`http://192.168.29.116:3000`); // socket server URL
+    const newSocket = io(`http://localhost:5000`); // server URL
+    newSocket.on("connect", () => {
+      console.log("Connected to server");
+    });
 
     setSocket(newSocket);
     return () => {
