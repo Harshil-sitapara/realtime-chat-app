@@ -76,7 +76,7 @@ const DBUrl = process.env.MONGO_URL;
 // Mongo db connection
 ConnectToDb(DBUrl);
 app.get("/",(req:Request,res:Response)=>{
-  res.send("<h1>server started!</h1>")
+  res.json("Hello")
 })
 app.use("/api/users", UserRoute);
 app.use("/api/chats", ChatRoute);
