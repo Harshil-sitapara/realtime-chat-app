@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { createServer } from "http";
-import { Server } from "socket.io";
+import { Server,Socket } from "socket.io";
 import ConnectToDb from "./db";
 import UserRoute from "../routes/user.routes";
 import ChatRoute from "../routes/chat.routes";
@@ -34,10 +34,10 @@ const io = new Server(httpServer, {
   }
 });
 let onlineUsers: OnlineUser[] = [];
-io.on("connection", (socket) => {
+io.on("connection", (socket:Socket) => {
   console.log("New connection", socket.id);
   // NOTE - Add new user when online
-  socket.on("addNewUser", (userId) => {
+  socket.on("addNewUser", (userId:string) => {
     !onlineUsers.some((user) => user.userId == userId) &&
       onlineUsers.push({
         userId,
@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
   });
 
   //NOTE - Add message
-  socket.on("sendMessage", (message) => {
+  socket.on("sendMessage", (message:any) => {
     const user = onlineUsers?.find(
       (user) => user.userId == message.recipientId
     );
