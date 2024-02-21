@@ -5,7 +5,7 @@ import {
   MatchPasswordAndGenerateToken,
   createTokenForUser,
 } from "../services/user.services";
-import cloudinary from "../services/cloudinary";
+import cloudinary from '../services/cloudinary.js'
 
 const registerUser = async (req: Request, res: Response) => {
   try {

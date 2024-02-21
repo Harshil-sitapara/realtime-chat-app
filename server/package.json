@@ -6,6 +6,7 @@
   "engines": {
     "node": "18.x"
   },
+  "type": "module",
   "scripts": {
     "watch": "tsc -w",
     "dev": "nodemon dist/index.js",
